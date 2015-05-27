@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      
+        依图面试总结 - 
+      
+      Caron的个人博客
+    </title>
+    
+    <meta name="author" content="Carson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/themes/hooligan/css-social-buttons/css/zocial.stripped.css">
+    <link href="/assets/themes/hooligan/css/pygments.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/hooligan/css/darkstrap.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/hooligan/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+  </head>
+
+  <body>
+    <div id="page-wrap">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+
+            <a class="brand" href="/">Caron的个人博客</a>
+
+            <div class="nav-collapse">
+              <ul class="nav">
+                
+                
+                
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">日志</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+              </ul>
+              <ul class="nav pull-right social visible-desktop">
+                <li class="divider-vertical"></li>
+                
+                <li>
+                  <a href="https://github.com/lxyyxl638" class="zocial github icon" target="_blank">
+                    <span class="hidden-desktop">Github</span>
+                  </a>
+                </li>
+                
+                
+                
+                
+                
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="content">
+          
+<div class="page-header">
+  <h1>
+    依图面试总结 
+    
+  </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    
+<h2 id="section">依图面试总结</h2>
+
+<h3 id="section-1">一面：</h3>
+<p>       
+<strong>1、LeetCode原题，判断一个数是不是2的幂。</strong><br />
+       当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。</p>
+
+<p>       
+<strong>2、下围棋的情况判断</strong><br />
+       面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局，如下:<br /></p>
+<div align="center">
+<img src="http://i.imgur.com/JFlqrTG.jpg" width="200" height="300" />
+</div>
+<p>       规则是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。</p>
+
+<h3 id="section-2">二面：</h3>
+<p>       
+<strong>1、给一个三维坐标A，找另一个高低位相同的三维坐标，使得离A最近。</strong><br />
+       根据距离公式可以得出三个分量独立，然后每个分量只需要16次枚举就行。当时没想到按最直接的想法想就行，想偏了。在提示下才做出来的。接下来是写代码，这题涉及到字符串和整型的互相转化，写了四个函数。写得比较慢，但好险没出bug，弥补了前面的失误。</p>
+
+<p>       
+<strong>2、LeetCode原题，给一个字符串，找出最长子串使得其实没一个字符重复</strong><br />
+       LeetCode原题，直接用个数组标记就行，但实在很困，语言表达得很渣。这题没写代码。</p>
+
+<p>       
+<strong>3、给一个整型数组，找出能整除p的子数组的个数。</strong><br />
+       一开始想复杂了，甚至往动态规划上想去了，其实也是从最直接的做法优化。O（N^2）枚举所有情况，用前缀和(sum[j] - sum[i]) mod p判断，代入问题转换成将前缀和mod p之后看有多少对相同的。这个用个统排计算一下即可，当时漏了一种情况就是sum[i] mod p == 0时要单独加上（长度为1的也符合条件）。这个代码也比较好实现。</p>
+
+<p>       <strong>小结</strong><br />
+       被突然问了数分成绩，可能是因为第三题看出了这个数学基础不扎实…
+###三面：
+       
+<strong>1、写最短路</strong><br />
+       写了个最好写的floyed..</p>
+
+<p>       
+<strong>2、证明最短路</strong><br />
+       写了之后发现自己把自己坑了，竟然要求证明…实在不知道从何下手，在面试官提醒下才加了一维F[i][j][k]用动态规划的方法写出了转移方程。最后问了一个为什么第三维可以省略，这个实在不知道怎么表达，最后他跟我说只需要答在第k次计算时f[i][j]的值还是表示k-1，即没有被更新过即可。</p>
+
+<p>       
+<strong>3、LeetCode原题，ZigZag打印</strong><br />
+       LeetCode原题，方阵打印。先枚举对角线x + y的和，在逐个遍历即可。当时脑子不清醒用了m,n两个变量变成不是方阵了。</p>
+
+<p>       
+<strong>4、介绍项目</strong><br />
+       就简单地介绍了下传承，还是被问到了老问题，遇到的最大困难是什么。我答了一是项目协同工作以及我们怎么克服，二是资料审查，当前只能人工，后期打算通过用户筛选。</p>
+
+<p>       
+<strong>小结</strong><br />
+       被面试官问了句“数学是不是没学好”…竟然被发现了…</p>
+
+<h3 id="section-3">四面：</h3>
+<p>       
+<strong>1、两个排好序的数组，求交集</strong><br />
+       
+用两个光标分别扫描A,B数组，如果A[i] == B[j]，那么就是目标交集，i++,j++。否则，加那个比较小的。这样是O(N)的</p>
+
+<p>       
+<strong>2、如果一个数组很大，有100w，另外一个很小,只有10</strong><br />
+       
+扫描小的，然后二分大的，这样是O(nLogM)</p>
+
+<p>       
+<strong>3、考虑一个1T的文本数据存储，硬盘7200转，I/O 100MB/s，内存16GB，带宽10GB。输入一个数，判断是否存在于文本中。问1s可以满足多少次访问</strong><br />
+       给跪了，磁盘访问这个完全不会，现场教的，要用B+树思想，其实就是建立索引，16GB的索引，然后再读入索引对应的序列。在这样之上读入对应序列的时间几乎可以忽略不计，即没有用到100MB/s那么大的I/O，因此可以减少索引大小，让我算减少多少。我就列方程解，不知道为什么死活解不出来…可能饿得困得头昏眼花了…最后好险面试官放过我了。说我这种算法是学生思维，真正在工程里这是最简单的问题，你需要知道这个东西真正的瓶颈在哪里。</p>
+
+<p>       
+<strong>小结</strong><br />
+       
+边吃饭边面的，脑子已经混了。加上身边很吵，根本不知道自己在想什么，感觉完全跪了。但可能是因为基础的算法想得比较快，而且主动拿出纸笔写代码。（想不出不敢吃饭呀….）最后还是让过了。</p>
+
+<h3 id="section-4">总结：</h3>
+<p>       总的来说这次没有什么压力，所以面得比较轻松，但是一轮轮车轮战体力脑子实在是个问题。最后都感觉眼前一片模糊了，不过好险坚持了下来。这或许有压力测试的成分吧，所以坚决不放弃还是很有用的。</p>
+
+    <hr>
+    <div class="pagination btn-group">
+      
+        <a class="btn prev" href="/private_diary/2015/05/27/summary" title="依图五面总结">&larr; Previous</a>
+      
+        <a class="btn" href="/archive.html">Archive</a>
+      
+        <a class="btn next disabled">Next &rarr;</a>
+      
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+  
+  <div class="span4">
+    <section>
+      <h4>Published</h4>
+      <div class="date"><span>27 May 2015</span></div>
+           
+    </section>
+    
+      <section>
+        <h4>Category</h4>
+        
+        <span class="category">
+          interview
+        </span>
+        
+      </section>
+         
+             
+  </div>
+</div>
+
+
+        </div>
+      </div> <!-- /container -->
+
+      <div class="footer-push"></div>
+    </div><!--/.page-wrap -->
+
+    <footer>
+      <div class="container">
+        <!-- <p>&copy; 2015 Carson
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://github.com/dhulihan/hooligan" target="_blank">The Hooligan Theme</a>
+        </p> -->
+        <p>Contact Me with <a href="mailto:carsonxiaoyang@gmail.com">carsonxiaoyang@gmail.com</a></p>
+      </div>
+    </footer>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/themes/hooligan/js/jquery.min.js"><\/script>')</script>
+    <script src="/assets/themes/hooligan/bootstrap/js/bootstrap.min.js"></script>
+
+    
+
+
+  </body>
+</html>
+

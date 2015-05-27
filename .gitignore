@@ -1,0 +1,9 @@
+private_diary/*
+cmd.lnk
+Thumbs.db
+.DS_Store
+
+!.gitkeep
+
+.rbenv-version
+.rvmrc
