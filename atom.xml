@@ -1,558 +1,142 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
- 
- <title>Caron的个人博客</title>
- <link href="http://lxyyxl638.github.io/" rel="self"/>
- <link href="http://lxyyxl638.github.io"/>
- <updated>2015-05-27T19:38:11+08:00</updated>
- <id>http://lxyyxl638.github.io</id>
- <author>
-   <name>Carson</name>
-   <email>307571482@qq.com</email>
- </author>
 
- 
- <entry>
-   <title>依图面试总结</title>
-   <link href="http://lxyyxl638.github.io/interview/2015/05/27/summary"/>
-   <updated>2015-05-27T00:05:26+08:00</updated>
-   <id>http://lxyyxl638.github.io/interview/2015/05/27/summary</id>
-   <content type="html">
-&lt;h2 id=&quot;section&quot;&gt;依图面试总结&lt;/h2&gt;
+  <title>Carson的博客</title>
+  <generator uri="https://github.com/jekyll/jekyll">Jekyll v2.4.0</generator>
+    <icon>/apple-touch-icon-precomposed.png</icon>
+  <subtitle>My Life</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="/" rel="alternate" type="text/html"/>
+  <updated>2015-07-11T12:26:49+08:00</updated>
+  <id>/</id>
+  <author>
+    <name>Carson Lin</name>
+    <uri>/</uri>
+    <email>carsonxiaoyang@gmail.com</email>
+  </author>
 
-&lt;h3 id=&quot;section-1&quot;&gt;一面：&lt;/h3&gt;
-&lt;p&gt;       
-&lt;strong&gt;1、LeetCode原题，判断一个数是不是2的幂。&lt;/strong&gt;&lt;br /&gt;
-       当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。&lt;/p&gt;
+  
+  <entry>
+    <title>设计模式学习一</title>
+    <link href="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/"/>
+    <updated>2015-06-01T00:00:00+08:00</updated>
+    <id>/study/设计模式学习一</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;    最近实习面试几乎场场都会问到设计模式，之前虽然也有用到过，但没有系统地学习过，借此机会补下课。本文仅是基于一个初学小白理解的总结，可能有些漏洞，欢迎纠错。&lt;/p&gt;
 
-&lt;p&gt;       
-&lt;strong&gt;2、下围棋的情况判断&lt;/strong&gt;&lt;br /&gt;
-       面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局，如下:&lt;br /&gt;&lt;/p&gt;
-&lt;div align=&quot;center&quot;&gt;
-&lt;img src=&quot;http://i.imgur.com/JFlqrTG.jpg&quot; width=&quot;200&quot; height=&quot;300&quot; /&gt;
-&lt;/div&gt;
-&lt;p&gt;       规则是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;二面：&lt;/h3&gt;
-&lt;p&gt;       
-&lt;strong&gt;1、给一个三维坐标A，找另一个高低位相同的三维坐标，使得离A最近。&lt;/strong&gt;&lt;br /&gt;
-       根据距离公式可以得出三个分量独立，然后每个分量只需要16次枚举就行。当时没想到按最直接的想法想就行，想偏了。在提示下才做出来的。接下来是写代码，这题涉及到字符串和整型的互相转化，写了四个函数。写得比较慢，但好险没出bug，弥补了前面的失误。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;2、LeetCode原题，给一个字符串，找出最长子串使得其实没一个字符重复&lt;/strong&gt;&lt;br /&gt;
-       LeetCode原题，直接用个数组标记就行，但实在很困，语言表达得很渣。这题没写代码。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;3、给一个整型数组，找出能整除p的子数组的个数。&lt;/strong&gt;&lt;br /&gt;
-       一开始想复杂了，甚至往动态规划上想去了，其实也是从最直接的做法优化。O（N^2）枚举所有情况，用前缀和(sum[j] - sum[i]) mod p判断，代入问题转换成将前缀和mod p之后看有多少对相同的。这个用个统排计算一下即可，当时漏了一种情况就是sum[i] mod p == 0时要单独加上（长度为1的也符合条件）。这个代码也比较好实现。&lt;/p&gt;
-
-&lt;p&gt;       &lt;strong&gt;小结&lt;/strong&gt;&lt;br /&gt;
-       被突然问了数分成绩，可能是因为第三题看出了这个数学基础不扎实…
-###三面：
-       
-&lt;strong&gt;1、写最短路&lt;/strong&gt;&lt;br /&gt;
-       写了个最好写的floyed..&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;2、证明最短路&lt;/strong&gt;&lt;br /&gt;
-       写了之后发现自己把自己坑了，竟然要求证明…实在不知道从何下手，在面试官提醒下才加了一维F[i][j][k]用动态规划的方法写出了转移方程。最后问了一个为什么第三维可以省略，这个实在不知道怎么表达，最后他跟我说只需要答在第k次计算时f[i][j]的值还是表示k-1，即没有被更新过即可。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;3、LeetCode原题，ZigZag打印&lt;/strong&gt;&lt;br /&gt;
-       LeetCode原题，方阵打印。先枚举对角线x + y的和，在逐个遍历即可。当时脑子不清醒用了m,n两个变量变成不是方阵了。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;4、介绍项目&lt;/strong&gt;&lt;br /&gt;
-       就简单地介绍了下传承，还是被问到了老问题，遇到的最大困难是什么。我答了一是项目协同工作以及我们怎么克服，二是资料审查，当前只能人工，后期打算通过用户筛选。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;小结&lt;/strong&gt;&lt;br /&gt;
-       被面试官问了句“数学是不是没学好”…竟然被发现了…&lt;/p&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;四面：&lt;/h3&gt;
-&lt;p&gt;       
-&lt;strong&gt;1、两个排好序的数组，求交集&lt;/strong&gt;&lt;br /&gt;
-       
-用两个光标分别扫描A,B数组，如果A[i] == B[j]，那么就是目标交集，i++,j++。否则，加那个比较小的。这样是O(N)的&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;2、如果一个数组很大，有100w，另外一个很小,只有10&lt;/strong&gt;&lt;br /&gt;
-       
-扫描小的，然后二分大的，这样是O(nLogM)&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;3、考虑一个1T的文本数据存储，硬盘7200转，I/O 100MB/s，内存16GB，带宽10GB。输入一个数，判断是否存在于文本中。问1s可以满足多少次访问&lt;/strong&gt;&lt;br /&gt;
-       给跪了，磁盘访问这个完全不会，现场教的，要用B+树思想，其实就是建立索引，16GB的索引，然后再读入索引对应的序列。在这样之上读入对应序列的时间几乎可以忽略不计，即没有用到100MB/s那么大的I/O，因此可以减少索引大小，让我算减少多少。我就列方程解，不知道为什么死活解不出来…可能饿得困得头昏眼花了…最后好险面试官放过我了。说我这种算法是学生思维，真正在工程里这是最简单的问题，你需要知道这个东西真正的瓶颈在哪里。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;小结&lt;/strong&gt;&lt;br /&gt;
-       
-边吃饭边面的，脑子已经混了。加上身边很吵，根本不知道自己在想什么，感觉完全跪了。但可能是因为基础的算法想得比较快，而且主动拿出纸笔写代码。（想不出不敢吃饭呀….）最后还是让过了。&lt;/p&gt;
-
-&lt;h3 id=&quot;section-4&quot;&gt;总结：&lt;/h3&gt;
-&lt;p&gt;       总的来说这次没有什么压力，所以面得比较轻松，但是一轮轮车轮战体力脑子实在是个问题。最后都感觉眼前一片模糊了，不过好险坚持了下来。这或许有压力测试的成分吧，所以坚决不放弃还是很有用的。&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>依图五面总结</title>
-   <link href="http://lxyyxl638.github.io/private_diary/2015/05/27/summary"/>
-   <updated>2015-05-27T00:05:26+08:00</updated>
-   <id>http://lxyyxl638.github.io/private_diary/2015/05/27/summary</id>
-   <content type="html">
-&lt;h2 id=&quot;section&quot;&gt;依图面试五面感悟：&lt;/h2&gt;
-&lt;p&gt;       
-&lt;strong&gt;林晨曦学长背景：中国第一个ACM世界冠军，微软亚洲研究院工作几年，阿里云奠基者。&lt;/strong&gt;&lt;br /&gt;
-       &lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;1、硅谷中国人的生活状态，在国内创业的原因。&lt;/strong&gt;&lt;br /&gt;
-       一是管理层很少有中国人，一般都是印度人居多，中国人要往上爬特别难。&lt;br /&gt;
-       二是去硅谷的中国人都是各种屌，你无法出头，而且新手工程师上头是不会派重活给你干，而且像谷歌里一个一个那么大的项目，又有历史沉淀，能修修补补一点代码就已经是需要挺多工程师去做的了。那么很多谷歌员工就想镀个金之后再出去创业公司，但在国外，你很难深入了解美国文化，需求等等各方面的因素，你很难看清楚一家小公司是否靠谱，而且在那你相当于是跟世界top二十的高校学生竞争，你完全没有竞争力。而去DropBox这种尚未上市的中型公司，虽然会比在谷歌好一点，但拿到股份有限，活也只是打打杂。总而言之，就是公司太大只能当螺丝钉，对自己的提高不大。虽然福利的确很好，但看个人喜欢怎样的生活吧。&lt;br /&gt;
-       三是中国人在那创业就更不可能了。（好吧，这个就像外国人不可能在中国创业一样….）&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;2、大公司员工的现状&lt;/strong&gt;&lt;br /&gt;
-       一是政治斗争比较严重，特别是百度（这也是现在百度不行的原因之一么..），如果BOSS在政治斗争中失败了，你也成了傻傻的牺牲品，虽然这貌似跟我没什么关系。&lt;br /&gt;
-       二同样是由于项目很大，你只能当螺丝钉，无法看到产品全貌，对自己提高有限。&lt;br /&gt;
-       三是交大高水平的学生进到一个组，如果组里其他学校的学生水品较差，你就成了第一名。人很容易满足，加上在最初三年资历未到很多东西你不能提前碰，在这种环境下成长曲线会很慢。（所以，其实身边都是一群一样优秀的人或者都是菜鸟对个人成长都不好，最好是有一些比你强的人，当然这就考验抗压能力了…）。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;3、与你想成为的那些人为伍&lt;/strong&gt;&lt;br /&gt;
-       这点是周健告诉我的，你想成为什么人，就跟那个人混，看他怎么成长的，跟着他学就行了。经验非常重要，你没接触过某个行业，理论再怎么好也是白搭。要善于从别人的发展路线中看自己。&lt;/p&gt;
-
-&lt;p&gt;       
-&lt;strong&gt;4、多听多总结也能消化成自己的&lt;/strong&gt;&lt;br /&gt;
-       
-晨曦学长说像我这样虽然没创业过但是在创投圈有些朋友其实也就知道怎么回事了，也有了自己的一些见解。因此多从跟别人的交谈中总结，消化，即使不是熟悉的行业也能说出个七七八八。当然关键还是多思考多总结。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;总结&lt;/h2&gt;
-&lt;p&gt;       这次能顺利拿到offer自认为不是因为面试面得好，而是由于整体表现比较惹人喜欢，比较谦虚，开朗，表现出好学。给人印象比较好，由于是小公司，可能更加看重一个人的整体感觉，所以有幸能拿到Offer。所以接下来的挑战是要让自己的技术不让人失望，到时九月份实习能至少不拖后腿，要达到这种效果，可以先跟几位在职的学长请教下，然后制定计划进行学习。（加了微信实在太机智了~~）。&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Jekyll Introduction</title>
-   <link href="http://lxyyxl638.github.io/lessons/2011/12/29/jekyll-introduction"/>
-   <updated>2011-12-29T00:00:00+08:00</updated>
-   <id>http://lxyyxl638.github.io/lessons/2011/12/29/jekyll-introduction</id>
-   <content type="html">
-&lt;p&gt;This Jekyll introduction will outline specifically  what Jekyll is and why you would want to use it.
-Directly following the intro we’ll learn exactly &lt;em&gt;how&lt;/em&gt; Jekyll does what it does.&lt;/p&gt;
-
-&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
-
-&lt;h3 id=&quot;what-is-jekyll&quot;&gt;What is Jekyll?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is a parsing engine bundled as a ruby gem used to build static websites from
-dynamic components such as templates, partials, liquid code, markdown, etc. Jekyll is known as “a simple, blog aware, static site generator”.&lt;/p&gt;
-
-&lt;h3 id=&quot;examples&quot;&gt;Examples&lt;/h3&gt;
-
-&lt;p&gt;This website is created with Jekyll. &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Sites&quot;&gt;Other Jekyll websites&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;what-does-jekyll-do&quot;&gt;What does Jekyll Do?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is a ruby gem you install on your local system.
-Once there you can call &lt;code&gt;jekyll --server&lt;/code&gt; on a directory and provided that directory
-is setup in a way jekyll expects, it will do magic stuff like parse markdown/textile files,
-compute categories, tags, permalinks, and construct your pages from layout templates and partials.&lt;/p&gt;
-
-&lt;p&gt;Once parsed, Jekyll stores the result in a self-contained static &lt;code&gt;_site&lt;/code&gt; folder.
-The intention here is that you can serve all contents in this folder statically from a plain static web-server.&lt;/p&gt;
-
-&lt;p&gt;You can think of Jekyll as a normalish dynamic blog but rather than parsing content, templates, and tags
-on each request, Jekyll does this once &lt;em&gt;beforehand&lt;/em&gt; and caches the &lt;em&gt;entire website&lt;/em&gt; in a folder for serving statically.&lt;/p&gt;
-
-&lt;h3 id=&quot;jekyll-is-not-blogging-software&quot;&gt;Jekyll is Not Blogging Software&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Jekyll is a parsing engine.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Jekyll does not come with any content nor does it have any templates or design elements.
-This is a common source of confusion when getting started.
-Jekyll does not come with anything you actually use or see on your website - you have to make it.&lt;/p&gt;
-
-&lt;h3 id=&quot;why-should-i-care&quot;&gt;Why Should I Care?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is very minimalistic and very efficient.
-The most important thing to realize about Jekyll is that it creates a static representation of your website requiring only a static web-server.
-Traditional dynamic blogs like Wordpress require a database and server-side code.
-Heavily trafficked dynamic blogs must employ a caching layer that ultimately performs the same job Jekyll sets out to do; serve static content.&lt;/p&gt;
-
-&lt;p&gt;Therefore if you like to keep things simple and you prefer the command-line over an admin panel UI then give Jekyll a try.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Developers like Jekyll because we can write content like we write code:&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;section&quot;&gt;设计模式分类：&lt;/h3&gt;
+&lt;p&gt;常见设计模式有23种，分别为：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Ability to write content in markdown or textile in your favorite text-editor.&lt;/li&gt;
-  &lt;li&gt;Ability to write and preview your content via localhost.&lt;/li&gt;
-  &lt;li&gt;No internet connection required.&lt;/li&gt;
-  &lt;li&gt;Ability to publish via git.&lt;/li&gt;
-  &lt;li&gt;Ability to host your blog on a static web-server.&lt;/li&gt;
-  &lt;li&gt;Ability to host freely on GitHub Pages.&lt;/li&gt;
-  &lt;li&gt;No database required.&lt;/li&gt;
+  &lt;li&gt;创建型：5种&lt;/li&gt;
+  &lt;li&gt;结构型：7种&lt;/li&gt;
+  &lt;li&gt;行为型：11种&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;how-jekyll-works&quot;&gt;How Jekyll Works&lt;/h1&gt;
+&lt;h3 id=&quot;section-1&quot;&gt;创建型模式&lt;/h3&gt;
 
-&lt;p&gt;The following is a complete but concise outline of exactly how Jekyll works.&lt;/p&gt;
-
-&lt;p&gt;Be aware that core concepts are introduced in rapid succession without code examples.
-This information is not intended to specifically teach you how to do anything, rather it
-is intended to give you the &lt;em&gt;full picture&lt;/em&gt; relative to what is going on in Jekyll-world.&lt;/p&gt;
-
-&lt;p&gt;Learning these core concepts should help you avoid common frustrations and ultimately
-help you better understand the code examples contained throughout Jekyll-Bootstrap.&lt;/p&gt;
-
-&lt;h2 id=&quot;initial-setup&quot;&gt;Initial Setup&lt;/h2&gt;
-
-&lt;p&gt;After &lt;a href=&quot;/index.html#start-now&quot;&gt;installing jekyll&lt;/a&gt; you’ll need to format your website directory in a way jekyll expects.
-Jekyll-bootstrap conveniently provides the base directory format.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-jekyll-application-base-format&quot;&gt;The Jekyll Application Base Format&lt;/h3&gt;
-
-&lt;p&gt;Jekyll expects your website directory to be laid out like so:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.
-|-- _config.yml
-|-- _includes
-|-- _layouts
-|   |-- default.html
-|   |-- post.html
-|-- _posts
-|   |-- 2011-10-25-open-source-is-good.markdown
-|   |-- 2011-04-26-hello-world.markdown
-|-- _site
-|-- index.html
-|-- assets
-    |-- css
-        |-- style.css
-    |-- javascripts
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;    创建型模式，按照《设计模式》一书中的说明:&lt;br /&gt;&lt;/p&gt;
+&lt;pre&gt;
+	&lt;code&gt;
+	创建型模式抽象了实例化过程，他们帮助一个系统独立于如何创建、组合和表示它的那些对象。
+	一个类创建型模式使用继承改变被实例化的类，而一个对象创建型模式将实例化委托给另一个对象。
+	&lt;/code&gt;
+&lt;/pre&gt;
+&lt;p&gt;    一开始看这段话的时候没怎么懂，通过形象的例子之后才明白。这里引用书上的例子。你玩一个走迷宫游戏，这里的迷宫游戏就是上面所说的&lt;code&gt;系统&lt;/code&gt;，你可以用createMaze()函数配置这个游戏的场景（实现创建墙壁，门，出入口等操作），有&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt;
-  Stores configuration data.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;
-  This folder is for partial views.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_layouts&lt;/strong&gt;
-  This folder is for the main templates your content will be inserted into.
-  You can have different layouts for different pages or page sections.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt;
-  This folder contains your dynamic content/posts.
-  the naming format is required to be &lt;code&gt;@YEAR-MONTH-DATE-title.MARKUP@&lt;/code&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_site&lt;/strong&gt;
-  This is where the generated site will be placed once Jekyll is done transforming it.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;assets&lt;/strong&gt;
-  This folder is not part of the standard jekyll structure.
-  The assets folder represents &lt;em&gt;any generic&lt;/em&gt; folder you happen to create in your root directory.
-  Directories and files not properly formatted for jekyll will be left untouched for you to serve normally.&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;普通迷宫&lt;/li&gt;
+  &lt;li&gt;魔法型迷宫（墙壁有魔法效果）&lt;/li&gt;
+  &lt;li&gt;HelloKitty主题迷宫&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;(read more: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Usage&quot;&gt;https://github.com/mojombo/jekyll/wiki/Usage&lt;/a&gt;)&lt;/p&gt;
-
-&lt;h3 id=&quot;jekyll-configuration&quot;&gt;Jekyll Configuration&lt;/h3&gt;
-
-&lt;p&gt;Jekyll supports various configuration options that are fully outlined here:
-(&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Configuration&quot;&gt;https://github.com/mojombo/jekyll/wiki/Configuration&lt;/a&gt;)&lt;/p&gt;
-
-&lt;h2 id=&quot;content-in-jekyll&quot;&gt;Content in Jekyll&lt;/h2&gt;
-
-&lt;p&gt;Content in Jekyll is either a post or a page.
-These content “objects” get inserted into one or more templates to build the final output for its respective static-page.&lt;/p&gt;
-
-&lt;h3 id=&quot;posts-and-pages&quot;&gt;Posts and Pages&lt;/h3&gt;
-
-&lt;p&gt;Both posts and pages should be written in markdown, textile, or HTML and may also contain Liquid templating syntax.
-Both posts and pages can have meta-data assigned on a per-page basis such as title, url path, as well as arbitrary custom meta-data.&lt;/p&gt;
-
-&lt;h3 id=&quot;working-with-posts&quot;&gt;Working With Posts&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Creating a Post&lt;/strong&gt;
-Posts are created by properly formatting a file and placing it the &lt;code&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
-A post must have a valid filename in the form &lt;code&gt;YEAR-MONTH-DATE-title.MARKUP&lt;/code&gt; and be placed in the &lt;code&gt;_posts&lt;/code&gt; directory.
-If the data format is invalid Jekyll will not recognize the file as a post. The date and title are automatically parsed from the filename of the post file.
-Additionally, each file must have &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt; prepended to its content.
-YAML Front-Matter is a valid YAML syntax specifying meta-data for the given file.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Order&lt;/strong&gt;
-Ordering is an important part of Jekyll but it is hard to specify a custom ordering strategy.
-Only reverse chronological and chronological ordering is supported in Jekyll.&lt;/p&gt;
-
-&lt;p&gt;Since the date is hard-coded into the filename format, to change the order, you must change the dates in the filenames.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Tags&lt;/strong&gt;
-Posts can have tags associated with them as part of their meta-data.
-Tags may be placed on posts by providing them in the post’s YAML front matter.
-You have access to the post-specific tags in the templates. These tags also get added to the sitewide collection.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Categories&lt;/strong&gt;
-Posts may be categorized by providing one or more categories in the YAML front matter.
-Categories offer more significance over tags in that they can be reflected in the URL path to the given post.
-Note categories in Jekyll work in a specific way.
-If you define more than one category you are defining a category hierarchy “set”.
-Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-title :  Hello World
-categories : [lessons, beginner]
----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This defines the category hierarchy “lessons/beginner”. Note this is &lt;em&gt;one category&lt;/em&gt; node in Jekyll.
-You won’t find “lessons” and “beginner” as two separate categories unless you define them elsewhere as singular categories.&lt;/p&gt;
-
-&lt;h3 id=&quot;working-with-pages&quot;&gt;Working With Pages&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Creating a Page&lt;/strong&gt;
-Pages are created by properly formatting a file and placing it anywhere in the root directory or subdirectories that do &lt;em&gt;not&lt;/em&gt; start with an underscore.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
-In order to register as a Jekyll page the file must contain &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt;.
-Registering a page means 1) that Jekyll will process the page and 2) that the page object will be available in the &lt;code&gt;site.pages&lt;/code&gt; array for inclusion into your templates.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Categories and Tags&lt;/strong&gt;
-Pages do not compute categories nor tags so defining them will have no effect.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Sub-Directories&lt;/strong&gt;
-If pages are defined in sub-directories, the path to the page will be reflected in the url.
-Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.
-|-- people
-    |-- bob
-        |-- essay.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This page will be available at &lt;code&gt;http://yourdomain.com/people/bob/essay.html&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Recommended Pages&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;index.html&lt;/strong&gt;
-You will always want to define the root index.html page as this will display on your root URL.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;404.html&lt;/strong&gt;
-Create a root 404.html page and GitHub Pages will serve it as your 404 response.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;sitemap.html&lt;/strong&gt;
-Generating a sitemap is good practice for SEO.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;about.html&lt;/strong&gt;
-A nice about page is easy to do and gives the human perspective to your website.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;templates-in-jekyll&quot;&gt;Templates in Jekyll&lt;/h2&gt;
-
-&lt;p&gt;Templates are used to contain a page’s or post’s content.
-All templates have access to a global site object variable: &lt;code&gt;site&lt;/code&gt; as well as a page object variable: &lt;code&gt;page&lt;/code&gt;.
-The site variable holds all accessible content and metadata relative to the site.
-The page variable holds accessible data for the given page or post being rendered at that point.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create a Template&lt;/strong&gt;
-Templates are created by properly formatting a file and placing it in the &lt;code&gt;_layouts&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
-Templates should be coded in HTML and contain YAML Front Matter.
-All templates can contain Liquid code to work with your site’s data.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Rending Page/Post Content in a Template&lt;/strong&gt;
-There is a special variable in all templates named : &lt;code&gt;content&lt;/code&gt;.
-The &lt;code&gt;content&lt;/code&gt; variable holds the page/post content including any sub-template content previously defined.
-Render the content variable wherever you want your main content to be injected into your template:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;...
-&amp;lt;body&amp;gt;
-  &amp;lt;div id=&quot;sidebar&quot;&amp;gt; ... &amp;lt;/div&amp;gt;
-  &amp;lt;div id=&quot;main&quot;&amp;gt;
-    &amp;#123;{content}&amp;#125;
-  &amp;lt;/div&amp;gt;
-&amp;lt;/body&amp;gt;
-...&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&quot;sub-templates&quot;&gt;Sub-Templates&lt;/h3&gt;
-
-&lt;p&gt;Sub-templates are exactly templates with the only difference being they
-define another “root” layout/template within their YAML Front Matter.
-This essentially means a template will render inside of another template.&lt;/p&gt;
-
-&lt;h3 id=&quot;includes&quot;&gt;Includes&lt;/h3&gt;
-&lt;p&gt;In Jekyll you can define include files by placing them in the &lt;code&gt;_includes&lt;/code&gt; folder.
-Includes are NOT templates, rather they are just code snippets that get included into templates.
-In this way, you can treat the code inside includes as if it was native to the parent template.&lt;/p&gt;
-
-&lt;p&gt;Any valid template code may be used in includes.&lt;/p&gt;
-
-&lt;h2 id=&quot;using-liquid-for-templating&quot;&gt;Using Liquid for Templating&lt;/h2&gt;
-
-&lt;p&gt;Templating is perhaps the most confusing and frustrating part of Jekyll.
-This is mainly due to the fact that Jekyll templates must use the Liquid Templating Language.&lt;/p&gt;
-
-&lt;h3 id=&quot;what-is-liquid&quot;&gt;What is Liquid?&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/Shopify/liquid&quot;&gt;Liquid&lt;/a&gt; is a secure templating language developed by &lt;a href=&quot;http://shopify.com&quot;&gt;Shopify&lt;/a&gt;.
-Liquid is designed for end-users to be able to execute logic within template files
-without imposing any security risk on the hosting server.&lt;/p&gt;
-
-&lt;p&gt;Jekyll uses Liquid to generate the post content within the final page layout structure and as the primary interface for working with
-your site and post/page data.&lt;/p&gt;
-
-&lt;h3 id=&quot;why-do-we-have-to-use-liquid&quot;&gt;Why Do We Have to Use Liquid?&lt;/h3&gt;
-
-&lt;p&gt;GitHub uses Jekyll to power &lt;a href=&quot;http://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;.
-GitHub cannot afford to run arbitrary code on their servers so they lock developers down via Liquid.&lt;/p&gt;
-
-&lt;h3 id=&quot;liquid-is-not-programmer-friendly&quot;&gt;Liquid is Not Programmer-Friendly.&lt;/h3&gt;
-
-&lt;p&gt;The short story is liquid is not real code and its not intended to execute real code.
-The point being you can’t do jackshit in liquid that hasn’t been allowed explicitly by the implementation.
-What’s more you can only access data-structures that have been explicitly passed to the template.&lt;/p&gt;
-
-&lt;p&gt;In Jekyll’s case it is not possible to alter what is passed to Liquid without hacking the gem or running custom plugins.
-Both of which cannot be supported by GitHub Pages.&lt;/p&gt;
-
-&lt;p&gt;As a programmer - this is very frustrating.&lt;/p&gt;
-
-&lt;p&gt;But rather than look a gift horse in the mouth we are going to
-suck it up and view it as an opportunity to work around limitations and adopt client-side solutions when possible.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Aside&lt;/strong&gt;
-My personal stance is to not invest time trying to hack liquid. It’s really unnecessary
-&lt;em&gt;from a programmer’s&lt;/em&gt; perspective. That is to say if you have the ability to run custom plugins (i.e. run arbitrary ruby code)
-you are better off sticking with ruby. Toward that end I’ve built &lt;a href=&quot;http://github.com/plusjade/mustache-with-jekyll&quot;&gt;Mustache-with-Jekyll&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;static-assets&quot;&gt;Static Assets&lt;/h2&gt;
-
-&lt;p&gt;Static assets are any file in the root or non-underscored subfolders that are not pages.
-That is they have no valid YAML Front Matter and are thus not treated as Jekyll Pages.&lt;/p&gt;
-
-&lt;p&gt;Static assets should be used for images, css, and javascript files.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-jekyll-parses-files&quot;&gt;How Jekyll Parses Files&lt;/h2&gt;
-
-&lt;p&gt;Remember Jekyll is a processing engine. There are two main types of parsing in Jekyll.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Content parsing.&lt;/strong&gt;
-  This is done with textile or markdown.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Template parsing.&lt;/strong&gt;
-This is done with the liquid templating language.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;And thus there are two main types of file formats needed for this parsing.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Post and Page files.&lt;/strong&gt;
-All content in Jekyll is either a post or a page so valid posts and pages are parsed with markdown or textile.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Template files.&lt;/strong&gt;
-  These files go in &lt;code&gt;_layouts&lt;/code&gt; folder and contain your blogs &lt;strong&gt;templates&lt;/strong&gt;. They should be made in HTML with the help of Liquid syntax.
-  Since include files are simply injected into templates they are essentially parsed as if they were native to the template.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Arbitrary files and folders.&lt;/strong&gt;
-Files that &lt;em&gt;are not&lt;/em&gt; valid pages are treated as static content and pass through
-Jekyll untouched and reside on your blog in the exact structure and format they originally existed in.&lt;/p&gt;
-
-&lt;h3 id=&quot;formatting-files-for-parsing&quot;&gt;Formatting Files for Parsing.&lt;/h3&gt;
-
-&lt;p&gt;We’ve outlined the need for valid formatting using &lt;strong&gt;YAML Front Matter&lt;/strong&gt;.
-Templates, posts, and pages all need to provide valid YAML Front Matter even if the Matter is empty.
-This is the only way Jekyll knows you want the file processed.&lt;/p&gt;
-
-&lt;p&gt;YAML Front Matter must be prepended to the top of template/post/page files:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-layout: post
-category : pages
-tags : [how-to, jekyll]
----
-
-... contents ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Three hyphens on a new line start the Front-Matter block and three hyphens on a new line end the block.
-The data inside the block must be valid YAML.&lt;/p&gt;
-
-&lt;p&gt;Configuration parameters for YAML Front-Matter is outlined here:
-&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;A comprehensive explanation of YAML Front Matter&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;defining-layouts-for-posts-and-templates-parsing&quot;&gt;Defining Layouts for Posts and Templates Parsing.&lt;/h4&gt;
-
-&lt;p&gt;The &lt;code&gt;layout&lt;/code&gt; parameter in the YAML Front Matter defines the template file for which the given post or template should be injected into.
-If a template file specifies its own layout, it is effectively being used as a &lt;code&gt;sub-template.&lt;/code&gt;
-That is to say loading a post file into a template file that refers to another template file with work in the way you’d expect; as a nested sub-template.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-jekyll-generates-the-final-static-files&quot;&gt;How Jekyll Generates the Final Static Files.&lt;/h2&gt;
-
-&lt;p&gt;Ultimately, Jekyll’s job is to generate a static representation of your website.
-The following is an outline of how that’s done:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Jekyll collects data.&lt;/strong&gt;
-  Jekyll scans the posts directory and collects all posts files as post objects. It then scans the layout assets and collects those and finally scans other directories in search of pages.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Jekyll computes data.&lt;/strong&gt;
-  Jekyll takes these objects, computes metadata (permalinks, tags, categories, titles, dates) from them and constructs one
-  big &lt;code&gt;site&lt;/code&gt; object that holds all the posts, pages, layouts, and respective metadata.
-  At this stage your site is one big computed ruby object.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Jekyll liquifies posts and templates.&lt;/strong&gt;
-  Next jekyll loops through each post file and converts (through markdown or textile) and &lt;strong&gt;liquifies&lt;/strong&gt; the post inside of its respective layout(s).
-  Once the post is parsed and liquified inside the the proper layout structure, the layout itself is “liquified”.
- &lt;strong&gt;Liquification&lt;/strong&gt; is defined as follows: Jekyll initiates a Liquid template, and passes a simpler hash representation of the ruby site object as well as a simpler
-  hash representation of the ruby post object. These simplified data structures are what you have access to in the templates.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Jekyll generates output.&lt;/strong&gt;
- Finally the liquid templates are “rendered”, thereby processing any liquid syntax provided in the templates
- and saving the final, static representation of the file.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;Notes.&lt;/strong&gt;
-Because Jekyll computes the entire site in one fell swoop, each template is given access to
-a global &lt;code&gt;site&lt;/code&gt; hash that contains useful data. It is this data that you’ll iterate through and format
-using the Liquid tags and filters in order to render it onto a given page.&lt;/p&gt;
-
-&lt;p&gt;Remember, in Jekyll you are an end-user. Your API has only two components:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;The manner in which you setup your directory.&lt;/li&gt;
-  &lt;li&gt;The liquid syntax and variables passed into the liquid templates.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;All the data objects available to you in the templates via Liquid are outlined in the &lt;strong&gt;API Section&lt;/strong&gt; of Jekyll-Bootstrap.
-You can also read the original documentation here: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Template-Data&quot;&gt;https://github.com/mojombo/jekyll/wiki/Template-Data&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;I hope this paints a clearer picture of what Jekyll is doing and why it works the way it does.
-As noted, our main programming constraint is the fact that our API is limited to what is accessible via Liquid and Liquid only.&lt;/p&gt;
-
-&lt;p&gt;Jekyll-bootstrap is intended to provide helper methods and strategies aimed at making it more intuitive and easier to work with Jekyll =)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Thank you&lt;/strong&gt; for reading this far.&lt;/p&gt;
-
-&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
-
-&lt;p&gt;Please take a look at []()
-or jump right into &lt;a href=&quot;&quot;&gt;Usage&lt;/a&gt; if you’d like.&lt;/p&gt;
-</content>
- </entry>
- 
- 
+&lt;p&gt;    最直接的做法就是在createMaze()里硬编码，这样每次要更换场景的时候就不得不重新更改代码。如果我们能在上面三个迷宫类型上面再抽象出一个类Abstract Maze,就能通过多态将代表三个迷宫场景的子类通过Abstract Maze传递给createMaze()。这样根本不需要改变createMaze()的代码就能实现三种模式的转换。这个就是创建型模式，抽象了实例化过程（迷宫场景的生成），系统独立于对象的创建，组合（创建迷宫的使用者不需要知道对象的具体实现，它只需要接收一个抽象类参数并调用接口就行了），在后文会说明这Abstract Maze其实就是抽象工厂，而createMaze()就是工厂方法。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;结构性模式&lt;/h3&gt;
+&lt;p&gt;    顾名思义，结构性模式就是负责组合类和对象，目的是获得更大的结构。结构性类模式采用继承机制来组合接口和实现。根据《设计模式》一书中所说，最简单的例子就是采用多重继承使得子类获得所有父类的性质。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;行为模式&lt;/h3&gt;
+&lt;p&gt;    行为模式涉及到算法和对象间职责的分配。行为模式不仅描述对象或类的模式，还描述他们之间的通信模式。这些模式刻划了在运行时难以跟踪的控制流。他们将你的注意力从控制流转移到对象间的联系方式上。—《设计模式》&lt;br /&gt;
+    行为类模式采用类继承机制实现在类间分配任务，行为对象通过对象复合以实现更高级的行为。一言以蔽之，行为模式是为了实现更复杂的算法或行为。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;最后&lt;/h3&gt;
+&lt;p&gt;    本文仅仅是对三大类设计模式进行了一次梗概，具体每种设计模式是什么样的将在后续的学习中一一阐述。&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>依图面试总结</title>
+    <link href="/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/"/>
+    <updated>2015-05-27T00:00:00+08:00</updated>
+    <id>/study/依图面试总结</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;h3 id=&quot;section&quot;&gt;一面：&lt;/h3&gt;
+&lt;p&gt;    1、LeetCode原题，判断一个数是不是2的幂。&lt;br /&gt;
+    当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。&lt;br /&gt;
+    2、下围棋的情况判断&lt;br /&gt;
+    面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局。是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;二面：&lt;/h3&gt;
+&lt;p&gt;    1、给一个三维坐标A，找另一个高低位相同的三维坐标，使得离A最近。&lt;br /&gt;
+    根据距离公式可以得出三个分量独立，然后每个分量只需要16次枚举就行。当时没想到按最直接的想法想就行，想偏了。在提示下才做出来的。接下来是写代码，这题涉及到字符串和整型的互相转化，写了四个函数。写得比较慢，但好险没出bug，弥补了前面的失误。&lt;br /&gt;
+    2、LeetCode原题，给一个字符串，找出最长子串使得其实没一个字符重复&lt;br /&gt;
+    LeetCode原题，直接用个数组标记就行，但实在很困，语言表达得很渣。这题没写代码。&lt;br /&gt;
+    3、给一个整型数组，找出能整除p的子数组的个数。&lt;br /&gt;
+    一开始想复杂了，甚至往动态规划上想去了，其实也是从最直接的做法优化。O（N^2）枚举所有情况，用前缀和(sum[j] - sum[i]) mod p判断，代入问题转换成将前缀和mod p之后看有多少对相同的。这个用个统排计算一下即可，当时漏了一种情况就是sum[i] mod p == 0时要单独加上（长度为1的也符合条件）。这个代码也比较好实现。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;小结&lt;/h3&gt;
+&lt;p&gt;    被突然问了数分成绩，可能是因为第三题看出了这个数学基础不扎实… &lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;三面:&lt;/h3&gt;
+&lt;p&gt;    1、写最短路&lt;br /&gt;
+    写了个最好写的floyed..&lt;br /&gt;
+    2、证明最短路
+    写了之后发现自己把自己坑了，竟然要求证明…实在不知道从何下手，在面试官提醒下才加了一维F[i][j][k]用动态规划的方法写出了转移方程。最后问了一个为什么第三维可以省略，这个实在不知道怎么表达，最后他跟我说只需要答在第k次计算时f[i][j]的值还是表示k-1，即没有被更新过即可。&lt;br /&gt;
+    3、LeetCode原题，ZigZag打印&lt;br /&gt;
+    LeetCode原题，方阵打印。先枚举对角线x + y的和，在逐个遍历即可。当时脑子不清醒用了m,n两个变量变成不是方阵了。&lt;br /&gt;
+    4、介绍项目&lt;br /&gt;
+    就简单地介绍了下传承，还是被问到了老问题，遇到的最大困难是什么。我答了一是项目协同工作以及我们怎么克服，二是资料审查，当前只能人工，后期打算通过用户筛选。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;小结&lt;/h3&gt;
+&lt;p&gt;    被面试官问了句“数学是不是没学好”…竟然被发现了…&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;四面：&lt;/h3&gt;
+&lt;p&gt;    1、两个排好序的数组，求交集&lt;br /&gt;
+    用两个光标分别扫描A,B数组，如果A[i] == B[j]，那么就是目标交集，i++,j++。否则，加那个比较小的。这样是O(N)的&lt;br /&gt;
+    2、如果一个数组很大，有100w，另外一个很小,只有10&lt;br /&gt;
+    扫描小的，然后二分大的，这样是O(nLogM)&lt;br /&gt;
+    3、考虑一个1T的文本数据存储，硬盘7200转，I/O 100MB/s，内存16GB，带宽10GB。输入一个数，判断是否存在于文本中。问1s可以满足多少次访问&lt;br /&gt;
+    给跪了，磁盘访问这个完全不会，现场教的，要用B+树思想，其实就是建立索引，16GB的索引，然后再读入索引对应的序列。在这样之上读入对应序列的时间几乎可以忽略不计，即没有用到100MB/s那么大的I/O，因此可以减少索引大小，让我算减少多少。我就列方程解，不知道为什么死活解不出来…可能饿得困得头昏眼花了…最后好险面试官放过我了。说我这种算法是学生思维，真正在工程里这是最简单的问题，你需要知道这个东西真正的瓶颈在哪里。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;小结&lt;/h3&gt;
+&lt;p&gt;    边吃饭边面的，脑子已经混了。加上身边很吵，根本不知道自己在想什么，感觉完全跪了。但可能是因为基础的算法想得比较快，而且主动拿出纸笔写代码。（想不出不敢吃饭呀….）最后还是让过了。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-7&quot;&gt;总结：&lt;/h2&gt;
+&lt;p&gt;    总的来说这次没有什么压力，所以面得比较轻松，但是一轮轮车轮战体力脑子实在是个问题。最后都感觉眼前一片模糊了，不过好险坚持了下来。这或许有压力测试的成分吧，所以坚决不放弃还是很有用的。&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  
 </feed>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>设计模式学习一 • Carson的博客</title>
+    <meta name="description" content="    最近实习面试几乎场场都会问到设计模式，之前虽然也有用到过，但没有系统地学习过，借此机会补下课。本文仅是基于一个初学小白理解的总结，可能有些漏洞，欢迎纠错。
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="设计模式学习一">
+	<meta name="twitter:description" content="    最近实习面试几乎场场都会问到设计模式，之前虽然也有用到过，但没有系统地学习过，借此机会补下课。本文仅是基于一个初学小白理解的总结，可能有些漏洞，欢迎纠错。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="设计模式学习一">
+	<meta property="og:description" content="    最近实习面试几乎场场都会问到设计模式，之前虽然也有用到过，但没有系统地学习过，借此机会补下课。本文仅是基于一个初学小白理解的总结，可能有些漏洞，欢迎纠错。
+
+">
+	<meta property="og:url" content="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>设计模式学习一</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>    最近实习面试几乎场场都会问到设计模式，之前虽然也有用到过，但没有系统地学习过，借此机会补下课。本文仅是基于一个初学小白理解的总结，可能有些漏洞，欢迎纠错。</p>
+
+<hr />
+
+<h3 id="section">设计模式分类：</h3>
+<p>常见设计模式有23种，分别为：</p>
+
+<ul>
+  <li>创建型：5种</li>
+  <li>结构型：7种</li>
+  <li>行为型：11种</li>
+</ul>
+
+<h3 id="section-1">创建型模式</h3>
+
+<p>    创建型模式，按照《设计模式》一书中的说明:<br /></p>
+<pre>
+	<code>
+	创建型模式抽象了实例化过程，他们帮助一个系统独立于如何创建、组合和表示它的那些对象。
+	一个类创建型模式使用继承改变被实例化的类，而一个对象创建型模式将实例化委托给另一个对象。
+	</code>
+</pre>
+<p>    一开始看这段话的时候没怎么懂，通过形象的例子之后才明白。这里引用书上的例子。你玩一个走迷宫游戏，这里的迷宫游戏就是上面所说的<code>系统</code>，你可以用createMaze()函数配置这个游戏的场景（实现创建墙壁，门，出入口等操作），有</p>
+
+<ul>
+  <li>普通迷宫</li>
+  <li>魔法型迷宫（墙壁有魔法效果）</li>
+  <li>HelloKitty主题迷宫</li>
+</ul>
+
+<p>    最直接的做法就是在createMaze()里硬编码，这样每次要更换场景的时候就不得不重新更改代码。如果我们能在上面三个迷宫类型上面再抽象出一个类Abstract Maze,就能通过多态将代表三个迷宫场景的子类通过Abstract Maze传递给createMaze()。这样根本不需要改变createMaze()的代码就能实现三种模式的转换。这个就是创建型模式，抽象了实例化过程（迷宫场景的生成），系统独立于对象的创建，组合（创建迷宫的使用者不需要知道对象的具体实现，它只需要接收一个抽象类参数并调用接口就行了），在后文会说明这Abstract Maze其实就是抽象工厂，而createMaze()就是工厂方法。</p>
+
+<h3 id="section-2">结构性模式</h3>
+<p>    顾名思义，结构性模式就是负责组合类和对象，目的是获得更大的结构。结构性类模式采用继承机制来组合接口和实现。根据《设计模式》一书中所说，最简单的例子就是采用多重继承使得子类获得所有父类的性质。</p>
+
+<h3 id="section-3">行为模式</h3>
+<p>    行为模式涉及到算法和对象间职责的分配。行为模式不仅描述对象或类的模式，还描述他们之间的通信模式。这些模式刻划了在运行时难以跟踪的控制流。他们将你的注意力从控制流转移到对象间的联系方式上。—《设计模式》<br />
+    行为类模式采用类继承机制实现在类间分配任务，行为对象通过对象复合以实现更高级的行为。一言以蔽之，行为模式是为了实现更复杂的算法或行为。</p>
+
+<h3 id="section-4">最后</h3>
+<p>    本文仅仅是对三大类设计模式进行了一次梗概，具体每种设计模式是什么样的将在后续的学习中一一阐述。</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=设计模式学习一&amp;url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%80/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-06-03T00:00:41Z" itemprop="dateModified">June 03, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

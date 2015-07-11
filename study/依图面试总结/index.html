@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>依图面试总结 • Carson的博客</title>
+    <meta name="description" content="一面：
+    1、LeetCode原题，判断一个数是不是2的幂。
+    当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。
+    2、下围棋的情况判断
+    面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局。是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="依图面试总结">
+	<meta name="twitter:description" content="一面：
+    1、LeetCode原题，判断一个数是不是2的幂。
+    当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。
+    2、下围棋的情况判断
+    面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局。是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="依图面试总结">
+	<meta property="og:description" content="一面：
+    1、LeetCode原题，判断一个数是不是2的幂。
+    当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。
+    2、下围棋的情况判断
+    面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局。是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。
+
+">
+	<meta property="og:url" content="/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>依图面试总结</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">一面：</h3>
+<p>    1、LeetCode原题，判断一个数是不是2的幂。<br />
+    当时没想起来是LeetCode原题，直观地利用二进制表示是否只有一个1的做法，因为如果是2的幂的话二进制表示肯定只有一个1，这样做法是O(32)的。后来面试官问有什么可以优化的，我没直接想出来，但给出了思考方向。先是试探性地问面试官他现在是希望我想出一个一步到位的算法，得到肯定回答后可以排除一些奇怪的想法，那么只剩下两种可能性。一种是一步算出有多少个1，另一种是消掉其中一个1然后看是否还有1。显然第一种是走不通的，那么只省下第二种可能性，面试官表示了赞同。在经过这样一番沟通后，面试官提示我可以考虑下和x-1的关系，这个时候我才想起这事leetCode原题，但时间太久还是没想起来，现场试验后发现这就是消掉最右边一个1的做法。<br />
+    2、下围棋的情况判断<br />
+    面试官拿了一张纸画了一个围棋盘，然后用黑白磁铁当做棋子摆出个棋局。是围棋规则，要让对手没一口活棋（就是他落哪都不能围住我但自己会被围）。然后又画了一个空格，两个空格，三个空格，四个空格及其以上的情况，其实问题的关键是黑棋只要能构建出两个独立的联通分量的话他就能活（不被围死）。但当时对规则理解实在没咋懂，加上中午没睡觉所以有点懵，没找出关键。</p>
+
+<hr />
+
+<h3 id="section-1">二面：</h3>
+<p>    1、给一个三维坐标A，找另一个高低位相同的三维坐标，使得离A最近。<br />
+    根据距离公式可以得出三个分量独立，然后每个分量只需要16次枚举就行。当时没想到按最直接的想法想就行，想偏了。在提示下才做出来的。接下来是写代码，这题涉及到字符串和整型的互相转化，写了四个函数。写得比较慢，但好险没出bug，弥补了前面的失误。<br />
+    2、LeetCode原题，给一个字符串，找出最长子串使得其实没一个字符重复<br />
+    LeetCode原题，直接用个数组标记就行，但实在很困，语言表达得很渣。这题没写代码。<br />
+    3、给一个整型数组，找出能整除p的子数组的个数。<br />
+    一开始想复杂了，甚至往动态规划上想去了，其实也是从最直接的做法优化。O（N^2）枚举所有情况，用前缀和(sum[j] - sum[i]) mod p判断，代入问题转换成将前缀和mod p之后看有多少对相同的。这个用个统排计算一下即可，当时漏了一种情况就是sum[i] mod p == 0时要单独加上（长度为1的也符合条件）。这个代码也比较好实现。</p>
+
+<h3 id="section-2">小结</h3>
+<p>    被突然问了数分成绩，可能是因为第三题看出了这个数学基础不扎实… </p>
+
+<hr />
+
+<h3 id="section-3">三面:</h3>
+<p>    1、写最短路<br />
+    写了个最好写的floyed..<br />
+    2、证明最短路
+    写了之后发现自己把自己坑了，竟然要求证明…实在不知道从何下手，在面试官提醒下才加了一维F[i][j][k]用动态规划的方法写出了转移方程。最后问了一个为什么第三维可以省略，这个实在不知道怎么表达，最后他跟我说只需要答在第k次计算时f[i][j]的值还是表示k-1，即没有被更新过即可。<br />
+    3、LeetCode原题，ZigZag打印<br />
+    LeetCode原题，方阵打印。先枚举对角线x + y的和，在逐个遍历即可。当时脑子不清醒用了m,n两个变量变成不是方阵了。<br />
+    4、介绍项目<br />
+    就简单地介绍了下传承，还是被问到了老问题，遇到的最大困难是什么。我答了一是项目协同工作以及我们怎么克服，二是资料审查，当前只能人工，后期打算通过用户筛选。</p>
+
+<h3 id="section-4">小结</h3>
+<p>    被面试官问了句“数学是不是没学好”…竟然被发现了…</p>
+
+<hr />
+
+<h3 id="section-5">四面：</h3>
+<p>    1、两个排好序的数组，求交集<br />
+    用两个光标分别扫描A,B数组，如果A[i] == B[j]，那么就是目标交集，i++,j++。否则，加那个比较小的。这样是O(N)的<br />
+    2、如果一个数组很大，有100w，另外一个很小,只有10<br />
+    扫描小的，然后二分大的，这样是O(nLogM)<br />
+    3、考虑一个1T的文本数据存储，硬盘7200转，I/O 100MB/s，内存16GB，带宽10GB。输入一个数，判断是否存在于文本中。问1s可以满足多少次访问<br />
+    给跪了，磁盘访问这个完全不会，现场教的，要用B+树思想，其实就是建立索引，16GB的索引，然后再读入索引对应的序列。在这样之上读入对应序列的时间几乎可以忽略不计，即没有用到100MB/s那么大的I/O，因此可以减少索引大小，让我算减少多少。我就列方程解，不知道为什么死活解不出来…可能饿得困得头昏眼花了…最后好险面试官放过我了。说我这种算法是学生思维，真正在工程里这是最简单的问题，你需要知道这个东西真正的瓶颈在哪里。</p>
+
+<h3 id="section-6">小结</h3>
+<p>    边吃饭边面的，脑子已经混了。加上身边很吵，根本不知道自己在想什么，感觉完全跪了。但可能是因为基础的算法想得比较快，而且主动拿出纸笔写代码。（想不出不敢吃饭呀….）最后还是让过了。</p>
+
+<h2 id="section-7">总结：</h2>
+<p>    总的来说这次没有什么压力，所以面得比较轻松，但是一轮轮车轮战体力脑子实在是个问题。最后都感觉眼前一片模糊了，不过好险坚持了下来。这或许有压力测试的成分吧，所以坚决不放弃还是很有用的。</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=依图面试总结&amp;url=/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/%E4%BE%9D%E5%9B%BE%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-05-27T23:00:41Z" itemprop="dateModified">May 27, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		<div class="ads"><style>
+.responsive-ads { width: 300px; height: 200px; }
+@media(min-width: 520px) { .responsive-ads { width: 468px; height: 60px; } }
+@media(min-width: 768px) { .responsive-ads { width: 160px; height: 600px; } }
+</style>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle responsive-ads"
+	style="display:inline-block"
+	data-ad-client=""
+	data-ad-slot=""></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div><!-- /.ads -->
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
