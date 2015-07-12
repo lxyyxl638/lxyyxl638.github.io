@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>设计模式学习二 • Carson的博客</title>
+    <meta name="description" content="开头
+    这一章我来总结下对5种创建型设计模式的学习。5种分别是
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="设计模式学习二">
+	<meta name="twitter:description" content="开头
+    这一章我来总结下对5种创建型设计模式的学习。5种分别是
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="设计模式学习二">
+	<meta property="og:description" content="开头
+    这一章我来总结下对5种创建型设计模式的学习。5种分别是
+
+">
+	<meta property="og:url" content="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>设计模式学习二</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">开头</h3>
+<p>    这一章我来总结下对5种创建型设计模式的学习。5种分别是</p>
+
+<ul>
+  <li>抽象工厂(Abstract Factory)</li>
+  <li>工厂方法(Factory Method)</li>
+  <li>单例模式(Singleton)</li>
+  <li>原型(Prototype)</li>
+  <li>生成器(Builder)</li>
+</ul>
+
+<h3 id="section-1">例子一</h3>
+<p>    定义和概念太难看懂，我们从几个个例子和代码来总结和比较这几种设计模式。<br />
+    我们要组装一台只有CPU和显卡的PC。Intel、IBM都生产CPU、显卡。下面的例子将说明：
+-	抽象工厂
+-	工厂方法
+-	单例模式</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> //PC
+<span class="lineno"> 2</span> class PC {
+<span class="lineno"> 3</span> 	virtual void addCPU(CPU*) {}//装配CPU
+<span class="lineno"> 4</span> 	virtual void addCard(Card*) {}//装配显卡
+<span class="lineno"> 5</span> }
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> //CPU类
+<span class="lineno"> 8</span> class CPU {}
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> //显卡类
+<span class="lineno">11</span> class Card{}
+<span class="lineno">12</span> 
+<span class="lineno">13</span> //Intel工艺的CPU
+<span class="lineno">14</span> class IntelCPU : public CPU {
+<span class="lineno">15</span> }
+<span class="lineno">16</span> 
+<span class="lineno">17</span> //IBM工艺的CPU
+<span class="lineno">18</span> class IBMCPU : public CPU {
+<span class="lineno">19</span> }
+<span class="lineno">20</span> 
+<span class="lineno">21</span> //Intel工艺的显卡
+<span class="lineno">22</span> class IntelCard : public Card {
+<span class="lineno">23</span> }
+<span class="lineno">24</span> 
+<span class="lineno">25</span> //IBM工艺的显卡
+<span class="lineno">26</span> class IBMCard : public Card {
+<span class="lineno">27</span> }
+<span class="lineno">28</span> 
+<span class="lineno">29</span> //抽象工厂
+<span class="lineno">30</span> class abstract_factory {
+<span class="lineno">31</span> 	...
+<span class="lineno">32</span> 	virtual PC* makePC() {}//工厂方法,返回一台PC
+<span class="lineno">33</span> 	virtual CPU* createCPU() {}//工厂方法,生产一个CPU
+<span class="lineno">34</span> 	virtual graphics_card* createCard() {}//工厂方法,生产一个显卡
+<span class="lineno">35</span> 	...
+<span class="lineno">36</span> }
+<span class="lineno">37</span> 
+<span class="lineno">38</span> //Intel工厂,不使用单例模式
+<span class="lineno">39</span> class Intel : public abstract_factory {
+<span class="lineno">40</span> 	...
+<span class="lineno">41</span> 	virtual CPU* createCPU() { return (CPU*) new IntelCPU }//override,生产一个IntelCPU
+<span class="lineno">42</span> 	virtual graphics_card* createCard() { return (graphics_card*) new IntelCard}//override,生产一个Intel显卡
+<span class="lineno">43</span> 	...
+<span class="lineno">44</span> }
+<span class="lineno">45</span> 
+<span class="lineno">46</span> //IBM工厂,使用单例模式
+<span class="lineno">47</span> class IBM : public abstract_factory {
+<span class="lineno">48</span> 
+<span class="lineno">49</span> private:
+<span class="lineno">50</span> 	static IBM* _instance = 0;//指向实例化对象的指针
+<span class="lineno">51</span> protected:
+<span class="lineno">52</span> 	IBM(){}//将构造函数设置成protected方法,不能设成private，不然子类就实例化不了了
+<span class="lineno">53</span> 	...
+<span class="lineno">54</span> public:
+<span class="lineno">55</span> 	//返回一个IBM工厂实例
+<span class="lineno">56</span> 	static IBM* getInstance() {
+<span class="lineno">57</span> 	  if (0 == _instance) {
+<span class="lineno">58</span> 		  _instance = new IBM;
+<span class="lineno">59</span> 	  }
+<span class="lineno">60</span> 	  return _instance;
+<span class="lineno">61</span>    };
+<span class="lineno">62</span> 	virtual PC* makePC() {}//返回一台PC
+<span class="lineno">63</span> 	virtual CPU* createCPU() { return (CPU*) new IBMCPU }//override,生产一个IBMCPU
+<span class="lineno">64</span> 	virtual graphics_card* createCard() { return (graphics_card*) new IBMCard}//override,生产一个IBM显卡
+<span class="lineno">65</span> }
+<span class="lineno">66</span> 
+<span class="lineno">67</span> //想要自己组装PC的客户
+<span class="lineno">68</span> class Client {
+<span class="lineno">69</span> 	...
+<span class="lineno">70</span> 	//组装机器，传入一个工厂参数
+<span class="lineno">71</span> 	PC* assemblePC(abstract_factory* factory) {
+<span class="lineno">72</span> 		//拿到一个PC实例
+<span class="lineno">73</span> 		PC* myPC = factory.makePC();
+<span class="lineno">74</span> 		CPU* myCPU = factory.createCPU();
+<span class="lineno">75</span> 		Card* myCard = factory.createCard();
+<span class="lineno">76</span> 		myPC.addCPU(myPC);
+<span class="lineno">77</span> 		myPC.addCard(myCard);
+<span class="lineno">78</span> 		return PC
+<span class="lineno">79</span> 	}
+<span class="lineno">80</span> 	...
+<span class="lineno">81</span> }
+<span class="lineno">82</span> 
+<span class="lineno">83</span> int main() {
+<span class="lineno">84</span> 	Client* me = new Client;
+<span class="lineno">85</span> 	
+<span class="lineno">86</span> 	//没有单例模式的工厂
+<span class="lineno">87</span> 	abstract_factory* intel = new Intel;
+<span class="lineno">88</span> 	//获得一台intel配置的PC
+<span class="lineno">89</span> 	PC* myPC = me.assemblePC(intel);
+<span class="lineno">90</span> 	
+<span class="lineno">91</span> 	或者
+<span class="lineno">92</span> 	
+<span class="lineno">93</span> 	//有单例模式的工厂,不能直接new
+<span class="lineno">94</span> 	abstract_factory* IBM = IBM::getInstance();
+<span class="lineno">95</span> 	//获得一台IBM配置的PC
+<span class="lineno">96</span> 	PC* myPC = me.assemblePC(IBM);
+<span class="lineno">97</span> 	
+<span class="lineno">98</span> 	return 0;
+<span class="lineno">99</span> }</code></pre></div>
+
+<h4 id="section-2">抽象工厂：</h4>
+<p>    上面的abstract_factory就是抽象工厂，<code>它提供了一系列相关或者相互依赖的接口，而不用指定他们具体的类</code>。上面代码中用户只需要往assemblePC传入不同的abstract_factory子类就能得到配置不同的电脑,因为它们的接口都是一样的（createCPU和createCard），抽象工厂生产一个系统的各个部件。所以，抽象工厂一般适用于以下场景：</p>
+
+<ul>
+  <li>一个系统要由多个产品系列中的一个来配置时（我的PC要么用Intel配置，要么用IBM配置）</li>
+</ul>
+
+<p>    简而言之，抽象工厂就是在多种系列产品加工厂上再抽象出的一个工厂，方便实现为用户配置提供统一接口。</p>
+
+<h4 id="section-3">工厂方法</h4>
+<p>    上面abstract_factory中的方法（32、33、34行）便是工厂方法，<code>定义一个用于创建对象的接口，让子类决定实例化哪一个类。它使一个类的实例化延迟到子类。</code>createCPU()创建一个CPU对象，但是Intel还是IBM呢？它只能延迟到它的子类(Intel工厂或者IBM工厂)来实现了，但接口都是一样的。这个还是挺好理解的。</p>
+
+<h4 id="section-4">单例模式</h4>
+<p>    上面IBM工厂(47行)采用了单例模式，<code>它保证了整个系统中只有一个IBM工厂实例</code>，直接看代码应该可以明白是如何实现的。这与实际情况也相符合，如果工厂需要统计它生产了多少CPU，那就得用单例模式了。不然用户随便new出很多个Intel工厂的话统计就乱套了。</p>
+
+<h4 id="section-5">例子二</h4>
+<p>    接下来的例子讲述容易和抽象工厂混淆的生成器模式(Builder),同样针对上面的场景。</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">  1</span> //PC
+<span class="lineno">  2</span> class PC {
+<span class="lineno">  3</span> 	virtual void addCPU(CPU*) {}//装配CPU
+<span class="lineno">  4</span> 	virtual void addCard(Card*) {}//装配显卡
+<span class="lineno">  5</span> }
+<span class="lineno">  6</span> 
+<span class="lineno">  7</span> //CPU类
+<span class="lineno">  8</span> class CPU {}
+<span class="lineno">  9</span> 
+<span class="lineno"> 10</span> //显卡类
+<span class="lineno"> 11</span> class Card{}
+<span class="lineno"> 12</span> 
+<span class="lineno"> 13</span> //Intel工艺的CPU
+<span class="lineno"> 14</span> class IntelCPU : public CPU {
+<span class="lineno"> 15</span> }
+<span class="lineno"> 16</span> 
+<span class="lineno"> 17</span> //IBM工艺的CPU
+<span class="lineno"> 18</span> class IBMCPU : public CPU {
+<span class="lineno"> 19</span> }
+<span class="lineno"> 20</span> 
+<span class="lineno"> 21</span> //Intel工艺的显卡
+<span class="lineno"> 22</span> class IntelCard : public Card {
+<span class="lineno"> 23</span> }
+<span class="lineno"> 24</span> 
+<span class="lineno"> 25</span> //IBM工艺的显卡
+<span class="lineno"> 26</span> class IBMCard : public Card {
+<span class="lineno"> 27</span> }
+<span class="lineno"> 28</span> 
+<span class="lineno"> 29</span> //生成器，负责生产、组成并返回PC
+<span class="lineno"> 30</span> class Builder {
+<span class="lineno"> 31</span> 	//返回一台PC，特别注意这个方法，后文会讲到
+<span class="lineno"> 32</span> 	virtual PC* getPC() {return 0};
+<span class="lineno"> 33</span> 	
+<span class="lineno"> 34</span> 	virtual void buildCPU(){}//制作CPU
+<span class="lineno"> 35</span> 	virtual void buildCard(){}//制作显卡
+<span class="lineno"> 36</span> }
+<span class="lineno"> 37</span> 
+<span class="lineno"> 38</span> //Intel生成器
+<span class="lineno"> 39</span> class Intel : public Builder {
+<span class="lineno"> 40</span> private:
+<span class="lineno"> 41</span> 	PC* pc;
+<span class="lineno"> 42</span> 	void assembleCPU(CPU*) {}//组装CPU
+<span class="lineno"> 43</span> public:
+<span class="lineno"> 44</span> 	virtual void buildCPU(){
+<span class="lineno"> 45</span> 		CPU* cpu = createCPU()//伪代码，表示生产了一个CPU，它可以跟上面的抽象工厂一起使用，但这个先忽略
+<span class="lineno"> 46</span> 		assembleCPU(cpu);//组装CPU
+<span class="lineno"> 47</span> 	}//制作CPU并组装
+<span class="lineno"> 48</span> 	virtual void buildCard(){}//制作显卡
+<span class="lineno"> 49</span> 	//返回一个PC
+<span class="lineno"> 50</span> 	virtual PC* getPC() {return pc};
+<span class="lineno"> 51</span> }
+<span class="lineno"> 52</span> 
+<span class="lineno"> 53</span> //想要自己组装PC的客户A
+<span class="lineno"> 54</span> class ClientA {
+<span class="lineno"> 55</span> 	...
+<span class="lineno"> 56</span> 	//组装机器，传入一个生成器参数
+<span class="lineno"> 57</span> 	PC* assemblePC(Builder* builder) {
+<span class="lineno"> 58</span> 	
+<span class="lineno"> 59</span> 		//只装一个CPU
+<span class="lineno"> 60</span> 		builder.buildCPU();
+<span class="lineno"> 61</span> 		
+<span class="lineno"> 62</span> 		//装一个显卡
+<span class="lineno"> 63</span> 		builder.buildCard();
+<span class="lineno"> 64</span> 		
+<span class="lineno"> 65</span> 		//获得PC
+<span class="lineno"> 66</span> 		return builder.getPC();
+<span class="lineno"> 67</span> 	}
+<span class="lineno"> 68</span> 	...
+<span class="lineno"> 69</span> }
+<span class="lineno"> 70</span> 
+<span class="lineno"> 71</span> //想要自己组装PC的客户B
+<span class="lineno"> 72</span> class ClientB {
+<span class="lineno"> 73</span> 	...
+<span class="lineno"> 74</span> 	//组装机器，传入一个生成器参数
+<span class="lineno"> 75</span> 	PC* assemblePC(Builder* builder) {
+<span class="lineno"> 76</span> 	
+<span class="lineno"> 77</span> 		//一口气装了3个CPU
+<span class="lineno"> 78</span> 		builder.buildCPU();
+<span class="lineno"> 79</span> 		builder.buildCPU();
+<span class="lineno"> 80</span> 		builder.buildCPU();
+<span class="lineno"> 81</span> 		
+<span class="lineno"> 82</span> 		//装一个显卡
+<span class="lineno"> 83</span> 		builder.buildCard();
+<span class="lineno"> 84</span> 		
+<span class="lineno"> 85</span> 		//获得PC
+<span class="lineno"> 86</span> 		return builder.getPC();
+<span class="lineno"> 87</span> 	}
+<span class="lineno"> 88</span> 	...
+<span class="lineno"> 89</span> }
+<span class="lineno"> 90</span> 
+<span class="lineno"> 91</span> //用户开始使用
+<span class="lineno"> 92</span> int main() {
+<span class="lineno"> 93</span> 
+<span class="lineno"> 94</span> 	PC* myPC;
+<span class="lineno"> 95</span> 	Builder* IntelBuilder = new Intel;
+<span class="lineno"> 96</span> 	ClientA* me = new ClientA
+<span class="lineno"> 97</span> 	PC = me.assemblePC(IntelBuilder);
+<span class="lineno"> 98</span> 	
+<span class="lineno"> 99</span> 	return 0;
+<span class="lineno">100</span> }</code></pre></div>
+
+<h4 id="section-6">生成器模式</h4>
+<p>    生成器模式定义：<code>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</code>。上面代码乍一看跟抽象工厂差不多，只是把factory换成了builder。但其实本质是不一样的。在生成器模式下有三种角色:</p>
+
+<ul>
+  <li>Product(PC)：需要构造的复杂对象</li>
+  <li>Builder(生产和实现装配的Intel,IBM)：为创建Product各个部件指定抽象接口。</li>
+  <li>Director(Client,负责控制装机流程的)：构造一个使用Builder接口的对象。</li>
+</ul>
+
+<p>    跟抽象工厂对比：</p>
+
+<ul>
+  <li>ClientA和ClientB是看不到CPU,Card这两个部件的。它只能调用builder去装机，但装的具体细节全由builder（Intel）控制，用户(Director)完全不知道，director只能控制装机流程（要装几个CPU，几个显卡）。</li>
+  <li>抽象工厂一开始就获得了构建对象(PC)，而生成器模式是一步一步装载PC，最后才返回给用户PC。这个从时间点上不一样。</li>
+</ul>
+
+<p>    再回过头去看生成器的定义，构建(CPU的生产和装载具体做法全都封装在了Builder里)和表示(Director通过不同的实现制造出不同的Product)分离。同样的构建过程(同一个builder)可以创建不同表示(3个CPU的PC还是1个CPU的PC)。</p>
+
+<h4 id="section-7">生成器模式和抽象工厂的对比</h4>
+
+<ul>
+  <li>两者都能构建复杂对象。但抽象工厂着重于构建相同系列的部件供给用户使用，用户爱怎么倒腾不关它的事（有用户喜欢把CPU插在内存插槽上或者其他奇奇怪怪的操作），而生成器着重于构建一个产品，它将产品具体装配封装起来，用户只能控制装载流程，但不能控制具体操作(你不能把CPU插在内存上，你只能决定需要几个CPU)。</li>
+  <li>根据上一条和代码，可以看出，抽象工厂是立马将产品生成，而生成器是到最后一步才把产品生成。</li>
+</ul>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=设计模式学习二&amp;url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%BA%8C/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-06-10T00:00:41Z" itemprop="dateModified">June 10, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
