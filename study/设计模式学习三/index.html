@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>设计模式学习三 • Carson的博客</title>
+    <meta name="description" content="开头
+    上一章总结了创建型模式的四种，详见设计模式学习二。这一章来总结最后一个创建型模式————原型模式(Prototype)。我们还是通过例子来学习。
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="设计模式学习三">
+	<meta name="twitter:description" content="开头
+    上一章总结了创建型模式的四种，详见设计模式学习二。这一章来总结最后一个创建型模式————原型模式(Prototype)。我们还是通过例子来学习。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="设计模式学习三">
+	<meta property="og:description" content="开头
+    上一章总结了创建型模式的四种，详见设计模式学习二。这一章来总结最后一个创建型模式————原型模式(Prototype)。我们还是通过例子来学习。
+
+">
+	<meta property="og:url" content="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%89/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%89/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>设计模式学习三</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">开头</h3>
+<p>    上一章总结了创建型模式的四种，详见<a href="http://lxyyxl638.github.io/study/设计模式学习二/">设计模式学习二</a>。这一章来总结最后一个创建型模式————原型模式(Prototype)。我们还是通过例子来学习。</p>
+
+<h3 id="section-1">例子</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> //PC
+<span class="lineno"> 2</span> class PC {
+<span class="lineno"> 3</span> 	virtual void addCPU(CPU*) {}//装配CPU
+<span class="lineno"> 4</span> 	virtual void addCard(Card*) {}//装配显卡
+<span class="lineno"> 5</span> }
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> //CPU类
+<span class="lineno"> 8</span> class CPU {}
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> //显卡类
+<span class="lineno">11</span> class Card{}
+<span class="lineno">12</span> 
+<span class="lineno">13</span> //Intel工艺的CPU
+<span class="lineno">14</span> class IntelCPU : public CPU {
+<span class="lineno">15</span> }
+<span class="lineno">16</span> 
+<span class="lineno">17</span> //IBM工艺的CPU
+<span class="lineno">18</span> class IBMCPU : public CPU {
+<span class="lineno">19</span> }
+<span class="lineno">20</span> 
+<span class="lineno">21</span> //Intel工艺的显卡
+<span class="lineno">22</span> class IntelCard : public Card {
+<span class="lineno">23</span> }
+<span class="lineno">24</span> 
+<span class="lineno">25</span> //IBM工艺的显卡
+<span class="lineno">26</span> class IBMCard : public Card {
+<span class="lineno">27</span> }
+<span class="lineno">28</span> 
+<span class="lineno">29</span> class factory {
+<span class="lineno">30</span> 	...
+<span class="lineno">31</span> 	virtual PC* makePC() {}//返回一台PC
+<span class="lineno">32</span> 	virtual CPU* createCPU() {}//生产一个CPU
+<span class="lineno">33</span> 	virtual graphics_card* createCard() {}//生产一个显卡
+<span class="lineno">34</span> 	...
+<span class="lineno">35</span> }
+<span class="lineno">36</span> 
+<span class="lineno">37</span> class PrototypeFactory : public factory{
+<span class="lineno">38</span> 	
+<span class="lineno">39</span> private:
+<span class="lineno">40</span> 	CPU* _prototypeCPU;
+<span class="lineno">41</span> 	Card* _prototypeCard;
+<span class="lineno">42</span> 	
+<span class="lineno">43</span> public:
+<span class="lineno">44</span> 	void PrototypeFactory(CPU* cpu,Card* card) {
+<span class="lineno">45</span> 		_prototypeCPU = cpu;//原型
+<span class="lineno">46</span> 		_prototypeCard = card;//原型
+<span class="lineno">47</span> 	}
+<span class="lineno">48</span> 	
+<span class="lineno">49</span> 	virtual CPU* createCPU() {
+<span class="lineno">50</span> 		return _prototypeCPU-&gt;clone();
+<span class="lineno">51</span> 	}//生产一个CPU
+<span class="lineno">52</span> 	
+<span class="lineno">53</span> 	virtual graphics_card* createCard() {
+<span class="lineno">54</span> 		return _prototypeCard-&gt;clone();
+<span class="lineno">55</span> 	}//生产一个显卡
+<span class="lineno">56</span> }
+<span class="lineno">57</span> 
+<span class="lineno">58</span> //想要自己组装PC的客户
+<span class="lineno">59</span> class Client {
+<span class="lineno">60</span> 	...
+<span class="lineno">61</span> 	PC* assemblePC(factory* protofactory) {
+<span class="lineno">62</span> 		//拿到一个PC实例
+<span class="lineno">63</span> 		PC* myPC = protofactory.makePC();
+<span class="lineno">64</span> 		CPU* myCPU = protofactory.createCPU();
+<span class="lineno">65</span> 		Card* myCard = protofactory.createCard();
+<span class="lineno">66</span> 		myPC.addCPU(myPC);
+<span class="lineno">67</span> 		myPC.addCard(myCard);
+<span class="lineno">68</span> 		return PC
+<span class="lineno">69</span> 	}
+<span class="lineno">70</span> 	...
+<span class="lineno">71</span> }
+<span class="lineno">72</span> 
+<span class="lineno">73</span> int main() {
+<span class="lineno">74</span> 	PC* myPC;
+<span class="lineno">75</span> 	Client* me = new Client;
+<span class="lineno">76</span> 	
+<span class="lineno">77</span> 	//要一台Intel的CPU,IBM显卡的机器
+<span class="lineno">78</span> 	factory* protofactory = new PrototypeFactory(new IntelCPU,new IBMCard);
+<span class="lineno">79</span> 	myPC = me.assemblePC(protofactory);
+<span class="lineno">80</span> 	
+<span class="lineno">81</span> 	return 0;
+<span class="lineno">82</span> }
+<span class="lineno">83</span> }</code></pre></div>
+
+<h4 id="section-2">原型模式</h4>
+<p>    原型模式：<code>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</code>。如果我们要配置一台Intel的CPU,IBM的显卡的PC，如果采用抽象工厂的话我们只能再继承abstractory_factory生成一个新类，而使用原型模式，你可以通过构造函数任意搭配。特别是在需要动态加载时候，原型模式的优势就体现出来了。<br />
+    通过将原型传递给PrototypeFactory,它便知道了需要创建对象的种类(什么牌子的CPU，显卡)，然后需要生成对象时便通过原型的拷贝函数返回。当然，拷贝函数必须在IntelCPU类里已经实现。</p>
+
+<h4 id="section-3">与抽象工厂区别</h4>
+<p>    两者之间有可能是竞争关系，但也有可能是合作关系。作为初学者，我只能简单地对比两者。
+-	通过上述代码和前面一章的代码，可以看出，原型模式可以获得搭配更灵活的产品（IBM,Intel的部件混合用只需要传入原型不一样就行）。而抽象工厂面对这种情况往往要生成一个新类。
+-	原型模式要求部件对象都要实现克隆函数</p>
+
+<h4 id="section-4">最后</h4>
+<p>    至此5种创建型模式的学习总结就结束了。这仅仅是第一次学习的收获，可能还太浅薄。纸上得来终觉浅，觉知此事要躬行。在以后项目中要有意识地发觉探究里面的设计模式。</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=设计模式学习三&amp;url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%89/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%89/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E4%B8%89/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-07-04T05:00:00Z" itemprop="dateModified">July 04, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
