@@ -7,7 +7,7 @@
   <subtitle>My Life</subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/" rel="alternate" type="text/html"/>
-  <updated>2015-07-12T17:20:38+08:00</updated>
+  <updated>2015-07-25T13:57:30+08:00</updated>
   <id>/</id>
   <author>
     <name>Carson Lin</name>
@@ -15,6 +15,306 @@
     <email>carsonxiaoyang@gmail.com</email>
   </author>
 
+  
+  <entry>
+    <title>高可用聊天室构建实习故事I Nginx+FastCGI配置一</title>
+    <link href="/study/Nginx+FastCGI%E9%85%8D%E7%BD%AE/"/>
+    <updated>2015-07-19T00:00:00+08:00</updated>
+    <id>/study/Nginx+FastCGI配置</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;h3 id=&quot;section&quot;&gt;起因：&lt;/h3&gt;
+&lt;p&gt;    最近在某公司实习，Leader给了个2个月的项目考核能力。&lt;code&gt;实现一个webQQ，后台要用CGI并用C语言写，支持2W人同时在线，而且系统要高可用。资源是给了5台服务器&lt;/code&gt;。什么是CGI，如何运用5台服务器构建负载均衡等问题一下子扑面而来，之前虽然写过的网站不少，但都是用PHP并且是现成的框架，什么都封装好的，服务器端如何配置，到底是怎样一个流程完全不知道。只知道客户端发一个http请求到服务器，服务器用PHP处理完业务逻辑之后再发回给客户端。这次是一个沉淀的机会，所以坚持写下这段实习故事，当做总结。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;初步接触：&lt;/h3&gt;
+&lt;p&gt;    暂时先抛开2W并发，高可用等要求，第一步我们当然得先实现功能，就是得让网站跑起来。这便引出了第一个问题：&lt;code&gt;什么是CGI编程&lt;/code&gt;？&lt;/p&gt;
+
+&lt;h3 id=&quot;cgi&quot;&gt;CGI是什么？&lt;/h3&gt;
+&lt;p&gt;    CGI（common gateway interface），通用网关接口协议。一个网站访问的过程大致是这样的：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;客户端（浏览器）发送一个http请求（一般通过TCP）到服务器（Apache,Nginx等）80端口&lt;/li&gt;
+  &lt;li&gt;服务器进程接受到http报文后，经过处理（将一些信息写进环境变量）然后调用后台CGI程序，把处理过的信息传入CGI程序，这中间采用标准输入输出，服务器标准输出对应CGI程序的标准输入&lt;/li&gt;
+  &lt;li&gt;CGI程序处理完业务逻辑后通过标准输出返回给服务器，服务器再返回给客户端（浏览器）&lt;/li&gt;
+  &lt;li&gt;服务器断开连接
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;    这里的CGI输入输出的介质是采用端口监听。
+    更详细地步骤如下：
+&lt;img src=&quot;/images/2015-07-19-1.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(1)浏览器通过URL连接到服务器&lt;/li&gt;
+  &lt;li&gt;(2)服务器将URL翻译成路径和文件名&lt;/li&gt;
+  &lt;li&gt;(3)服务器将URL指向一个应该程序而不是一个静态文件&lt;/li&gt;
+  &lt;li&gt;(4)服务器为应用程序执行做准备&lt;/li&gt;
+  &lt;li&gt;(5)应用程序执行，读取标准输入和有关环境变量&lt;/li&gt;
+  &lt;li&gt;(6)应用程序准备进行标准输出&lt;/li&gt;
+  &lt;li&gt;(7)应用程序发送标准输出并结束&lt;/li&gt;
+  &lt;li&gt;(8)服务器断开连接&lt;/li&gt;
+  &lt;li&gt;(9)浏览器显示应用程序的输出结果&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;cgi-1&quot;&gt;为什么要用CGI？&lt;/h3&gt;
+&lt;p&gt;    使用CGI可以使后台服务程序和服务器极大解耦。服务器的崩溃并不会影响后台服务（这里的后台服务是指上图服务器之后的层面）。这里可以对比一下Php在Apache的运行模式。可以参考&lt;a href=&quot;http://www.cnblogs.com/phphuaibei/archive/2011/09/13/2174927.html&quot;&gt;php原理&lt;/a&gt;或者其他资料。简单来说，就是Php在Apache上有三种运行模式&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Apache模块DLL&lt;/li&gt;
+  &lt;li&gt;CGI&lt;/li&gt;
+  &lt;li&gt;FastCGI&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;    第三种后面再详述，第一种是将PHP作为Apache的一个模块来运行，Apache启动的时候会启动多个服务器进程（这又涉及到于Apache的preforker和worker模式），而Php解释引擎也集成在里面。Php作为Apache的一个模块，必须寄生在Apache上财能运行。&lt;br /&gt;
+    所以，使用CGI就不同上述模式，它可以把后台服务和Apache解耦。&lt;/p&gt;
+
+&lt;h3 id=&quot;fastcgi&quot;&gt;FastCGI&lt;/h3&gt;
+&lt;p&gt;    那么CGI又有什么缺点呢？从上述CGI的运行原理来看，每一条http请求都会有一次CGI程序的调用和退出。将CGI程序加载进内存，释放内存的代价是巨大的，也是十分浪费的。那么有一个很自然的想法，能不能把CGI程序设置成一开始就启动，弄成一个常驻进程，处理多次（注意，是多次同个http请求，不是多个）请求呢？。FastCGI就是这样一种机制。&lt;br /&gt;
+&lt;br /&gt;
+    先从感性上对比下CGI和FastCGI：
+&lt;img src=&quot;/images/2015-07-19-2.jpg&quot; /&gt;
+&lt;img src=&quot;/images/2015-07-19-3.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    从上图可以看出，FastCGI多了一个进程管理器，在服务器启动时，启动进程管理器（Php对应PHP-FPM，C对应spawn-fcgi），进程管理器再去启动多个cgi进程（每个进程监听一个端口）。请求过程跟上面CGI一样，只是多了一层进程管理器转发而且请求返回结果后cgi进程不会退出。&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;FastCGI的官方文档
+&lt;a href=&quot;http://www.fastcgi.com/drupal/&quot;&gt;FastCGI的官方文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;nginxfastcgi&quot;&gt;Nginx+FastCGI&lt;/h3&gt;
+&lt;p&gt;    在对CGI和FastCGI有一个基本的认识之后，我们从实例当下看下如何配置Nginx服务器+FastCGI,这里FastCGI用C/C++实现。
+&lt;img src=&quot;/images/2015-07-19-4.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;上图是另外一种表示方法，这里的wraper就是所谓的进程管理器。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;环境部署（部分参考网上资料）&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;nginx的安装、部署与配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;到nginx官网下载最新版本的nginx&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[安装]
+
+根据README解压并安装
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; ./configure 
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;     make
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     make install （默认安装到/usr/local/nginx）
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     [配置和管理]    
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;     1）执行选项
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;         -c &lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;/path/to/config&amp;gt; 为 Nginx 指定一个配置文件，来代替缺省的。不输入则使用默认的配置文件。
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;         -t 不运行，而仅仅测试配置文件。nginx 将检查配置文件的语法的正确性，并尝试打开配置文件中所引用到的文件。
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;         -v 显示 nginx 的版本。
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;         -V 显示 nginx 的版本，编译器版本和配置参数。
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;  
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;     2）检查配置文件
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;         sudo ./nginx -t
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;         nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;         nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt;      3）启动 - 默认和特殊
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt;         /usr/local/nginx/sbin/nginx （默认启动方式）
+&lt;span class=&quot;lineno&quot;&gt;30&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;31&lt;/span&gt;         /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf （指定配置文件启动）
+&lt;span class=&quot;lineno&quot;&gt;32&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;33&lt;/span&gt;     4）查看nginx进程号（master是主进程）
+&lt;span class=&quot;lineno&quot;&gt;34&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;35&lt;/span&gt;         ps -ef | grep nginx
+&lt;span class=&quot;lineno&quot;&gt;36&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;37&lt;/span&gt;     5）重新加载配置文件
+&lt;span class=&quot;lineno&quot;&gt;38&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;39&lt;/span&gt;         sudo kill -HUP [nginx主进程号]
+&lt;span class=&quot;lineno&quot;&gt;40&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;41&lt;/span&gt;         通过系统的信号控制 Nginx
+&lt;span class=&quot;lineno&quot;&gt;42&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;43&lt;/span&gt;         可以使用信号系统来控制主进程。默认，nginx 将其主进程的 pid 写入到 /usr/local/nginx/logs/nginx.pid 文件中。通过传递参数        给 ./configure 或使用 pid 指令，来改变该文件的位置。
+&lt;span class=&quot;lineno&quot;&gt;44&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;45&lt;/span&gt;        主进程可以处理以下的信号：
+&lt;span class=&quot;lineno&quot;&gt;46&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;47&lt;/span&gt;         命令 说明 备注
+&lt;span class=&quot;lineno&quot;&gt;48&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;49&lt;/span&gt;         TERM, INT 快速关闭
+&lt;span class=&quot;lineno&quot;&gt;50&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;51&lt;/span&gt;         QUIT 从容关闭
+&lt;span class=&quot;lineno&quot;&gt;52&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;53&lt;/span&gt;         HUP 重载配置
+&lt;span class=&quot;lineno&quot;&gt;54&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;55&lt;/span&gt; 用新的配置开始新的工作进程    从容关闭旧的工作进程
+&lt;span class=&quot;lineno&quot;&gt;56&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;57&lt;/span&gt;         USR1 重新打开日志文件
+&lt;span class=&quot;lineno&quot;&gt;58&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;59&lt;/span&gt;         USR2 平滑升级可执行程序
+&lt;span class=&quot;lineno&quot;&gt;60&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;61&lt;/span&gt;         WINCH 从容关闭工作进程
+&lt;span class=&quot;lineno&quot;&gt;62&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;63&lt;/span&gt;     6）默认目录结构
+&lt;span class=&quot;lineno&quot;&gt;64&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;65&lt;/span&gt;         主目录：/usr/local/nginx/
+&lt;span class=&quot;lineno&quot;&gt;66&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;67&lt;/span&gt;         配置目录：/usr/local/nginx/conf/
+&lt;span class=&quot;lineno&quot;&gt;68&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;69&lt;/span&gt;         root目录：/usr/local/nginx/html/
+&lt;span class=&quot;lineno&quot;&gt;70&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;71&lt;/span&gt;         可执行文件路径：/usr/local/nginx/sbin/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;spawn_fastcgi的安装、部署与配置&lt;/p&gt;
+
+    &lt;p&gt;spawn_fastcgi  https://github.com/lighttpd/spawn-fcgi&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; 下载以后解压并安装（请记得看README）
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     如果没有configure，请先执行./autogen.sh，生成configure
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     ./configure
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;     make
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     编译好以后，将可执行文件移动到nginx的sbin目录下
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;     cp ./src/spawn-fcgi /usr/local/nginx/sbin/ （cp到nginx的安装目录下）&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;fastcgi库的安装&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这个库主要重载了printf和其他几个函数，是很小的一个库。重载printf用于输出流重定向，因为我们要把输出定向到进程管理器（spwan_fcgi）上&lt;br /&gt;
+库地址 http://www.fastcgi.com/dist/fcgi.tar.gz&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; tar –zxvf fcgi.tar.gz
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; ./configure
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; make
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; make install
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; 编译时如出现，fcgio.cpp error &amp;#39;eof&amp;#39; was not declared in this scope
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; 在/include/fcgio.h文件中加上 #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;，然后再编译安装就通过了&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Demo和web发布&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;[CGI程序]&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;fcgi_stdio.h&amp;gt;&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; int main() { 
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; int count = 0; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; while (FCGI_Accept() &amp;gt;= 0) { 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; printf(&amp;quot;Content-type: text/html\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &amp;quot;\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &amp;quot;&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; &amp;quot;FastCGI Hello!&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &amp;quot;Request number %d running on host%s &amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; &amp;quot;Process ID: %d\n&amp;quot;, ++count, getenv(&amp;quot;SERVER_NAME&amp;quot;), getpid()); 
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; } 
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; return 0; 
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; }
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; [编译]
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; g++ demo.cc -o demo -lfcgi​&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;直接运行可执行文件，看看能否正常运行。如果出现缺少库libfcgi.so.0，则自己需要手动把/usr/local/lib/libfcgi.so.0库建立一个链接到/usr/lib/目录下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; ln -s /usr/local/lib/libfcgi.so.0 /usr/lib/（或者把so的库路径添加到/etc/ld.so.conf，并执行ldconfig更新一下）&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Web发布&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;1）将CGI可执行程序移动到nginx的安装目录下 /usr/local/nginx/cgibin （文件夹不存在则自己创建） &lt;/p&gt;
+
+&lt;p&gt;2）启动spawn-fcgi管理进程，并绑定server IP和端口（不要跟nginx的监听端口重合）&lt;/p&gt;
+
+&lt;p&gt;Demo中使用&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; /usr/local/nginx/sbin/spawn-fcgi -a 127.0.0.1 -p 8088 -f /usr/local/nginx/cgibin/demo
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 查看一下8088端口是否已成功：
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; netstat -nap | grep 8088
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; 或者
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; lsof -i:8080
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; ​&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;3）更改nginx.conf配置文件，让nginx转发请求&lt;/p&gt;
+
+&lt;p&gt;在http节点的子节点-“server节”点中下添加配置&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; location ~ \.cgi$ {
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 	fastcgi_pass 127.0.0.1:8088; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	fastcgi_param SCRIPT_FILENAME fcgi$fastcgi_script_name;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	include fastcgi_params;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;4）打开浏览器输入
+http://localhost/demo.cgi（这里只要后缀是.cgi就可以）&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;备注：&lt;/h3&gt;
+&lt;p&gt;    注意上面代码中的&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; while (FCGI_Accept() &amp;gt;= 0) { 
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; printf(&amp;quot;Content-type: text/html\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	&amp;quot;\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	&amp;quot;&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; 	&amp;quot;FastCGI Hello!&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; 	&amp;quot;Request number %d running on host%s &amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; 	&amp;quot;Process ID: %d\n&amp;quot;, ++count, getenv(&amp;quot;SERVER_NAME&amp;quot;), getpid()); 
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;这里printf最好换成FCGI_printf，不然当引入stdio头文件的时候会发生错误。&lt;br /&gt;
+这里 while (FCGI_Accept() &amp;gt;= 0)表示接受到一个新的请求，然后执行逻辑处理，完成后再回到while循环的开始，阻塞等待下一个请求。如果没有这个while,那就成普通的CGI程序了。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;最后&lt;/h3&gt;
+&lt;p&gt;    这样一个小的demo就运行起来了。下篇将整理更深入配置环境的知识，方便之后的开发。&lt;/p&gt;
+
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Web开发遇到问题总结</title>
+    <link href="/study/Web%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
+    <updated>2015-07-13T00:00:00+08:00</updated>
+    <id>/study/Web开发遇到问题汇总</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;h3 id=&quot;section&quot;&gt;开头&lt;/h3&gt;
+&lt;p&gt;    这里主要是WEB开发中遇到的一些小问题的汇总。&lt;/p&gt;
+
+&lt;h3 id=&quot;javascript&quot;&gt;javascript篇&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;1、使用webuploader时选择按钮死活无效，调了半天才发现是js文件重名了，虽然是放在不同文件目录下。修改其中一个的文件名即可解决。
+&lt;/code&gt;&lt;/pre&gt;
+
+    </content>
+  </entry>
   
   <entry>
     <title>设计模式学习三</title>
