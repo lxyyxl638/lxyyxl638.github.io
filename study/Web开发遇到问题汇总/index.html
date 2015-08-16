@@ -161,7 +161,29 @@
 
 <h3 id="javascript">javascript篇</h3>
 <pre><code>1、使用webuploader时选择按钮死活无效，调了半天才发现是js文件重名了，虽然是放在不同文件目录下。修改其中一个的文件名即可解决。
+
+2、使用AJAX的时候会存在一个异步问题，所以若要根据AJAX返回结果进行处理的话，必须放在回调函数里
 </code></pre>
+
+<h3 id="mysql">MySQL篇</h3>
+<p>http://blog.chinaunix.net/uid-20639775-id-3249105.html</p>
+
+<p>1、主机连接虚拟机MySQL,权限控制
+2、MySQL找不到mysqld.sock
+3、MySQL包的组成</p>
+
+<p>MySQL C API 每一次query如果产生结果集，那么都得调用mysql_free_result释放</p>
+
+<h3 id="git">Git篇</h3>
+
+<h4 id="redis">Redis篇</h4>
+<p>example.c:(.text+0x319): undefined reference to `freeReplyObject’
+g++ -lhiredis，需要链接的库都在/usr/local/include,学习了g++链接库</p>
+
+<p>http://blog.csdn.net/sahusoft/article/details/7388617</p>
+
+<h3 id="c">C++</h3>
+<p>char *强转string的时候不能为空，不然会报错</p>
 
 				<hr />
 				<footer class="page-footer">
@@ -189,7 +211,8 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
 	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-	var disqus_shortname = '';
+	// var disqus_shortname = '';
+	var disqus_shortname = 'supery';
 
 	/* * * DON'T EDIT BELOW THIS LINE * * */
 	(function() {

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>高可用聊天室构建实习故事III Google Ctemplate • Carson的博客</title>
+    <meta name="description" content="前言：
+        由于采用没有采用任何框架，所以很多工具都得自己造或者用第三方库拼拼凑凑。这一章来讲述一下使用C++模板引擎Google Ctemplate搭建自己简易的MVC框架。
+        使用模板引擎的目的是为了将数据和样式分离开。这样就不用生硬地将数据嵌在样式代码里了。
+        回忆下我们第一章的CGI程序demo，我们需要将整个HTML文件按标准输出的格式输出。
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="高可用聊天室构建实习故事III Google Ctemplate">
+	<meta name="twitter:description" content="前言：
+        由于采用没有采用任何框架，所以很多工具都得自己造或者用第三方库拼拼凑凑。这一章来讲述一下使用C++模板引擎Google Ctemplate搭建自己简易的MVC框架。
+        使用模板引擎的目的是为了将数据和样式分离开。这样就不用生硬地将数据嵌在样式代码里了。
+        回忆下我们第一章的CGI程序demo，我们需要将整个HTML文件按标准输出的格式输出。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="高可用聊天室构建实习故事III Google Ctemplate">
+	<meta property="og:description" content="前言：
+        由于采用没有采用任何框架，所以很多工具都得自己造或者用第三方库拼拼凑凑。这一章来讲述一下使用C++模板引擎Google Ctemplate搭建自己简易的MVC框架。
+        使用模板引擎的目的是为了将数据和样式分离开。这样就不用生硬地将数据嵌在样式代码里了。
+        回忆下我们第一章的CGI程序demo，我们需要将整个HTML文件按标准输出的格式输出。
+
+">
+	<meta property="og:url" content="/study/Google%20Ctemplate/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/Google%20Ctemplate/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>高可用聊天室构建实习故事III Google Ctemplate</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">前言：</h3>
+<p>        由于采用没有采用任何框架，所以很多工具都得自己造或者用第三方库拼拼凑凑。这一章来讲述一下使用C++模板引擎Google Ctemplate搭建自己简易的MVC框架。<br />
+        使用模板引擎的目的是为了将数据和样式分离开。这样就不用生硬地将数据嵌在样式代码里了。<br />
+        回忆下我们第一章的CGI程序demo，我们需要将整个HTML文件按标准输出的格式输出。<br /></p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> while (FCGI_Accept() &gt;= 0) { 
+<span class="lineno">2</span> printf(&quot;Content-type: text/html\r\n&quot; 
+<span class="lineno">3</span> 	&quot;\r\n&quot; 
+<span class="lineno">4</span> 	&quot;&quot; 
+<span class="lineno">5</span> 	&quot;FastCGI Hello!&quot; 
+<span class="lineno">6</span> 	&quot;Request number %d running on host%s &quot; 
+<span class="lineno">7</span> 	&quot;Process ID: %d\n&quot;, ++count, getenv(&quot;SERVER_NAME&quot;), getpid()); 
+<span class="lineno">8</span> }</code></pre></div>
+
+<p>        这里有两个变量，count和getpid()。如果不将数据和样式分离，当有几十个变量的时候这个printf函数就会很长很难看，而且无法像一个简单的html页面一样可以很方便地调试。<br />
+        Ctemplate网上找不到中文文档，但是因为其本身自带的文档已经写得很详细，所以本章仅对重要部分按照我的理解进行阐述，并列举几个比较重要的部分。</p>
+
+<h3 id="section-1">梗概</h3>
+<p>        让我们先对Ctemplate有一个感性的了解。它由两部分组成:<br /></p>
+
+<ul>
+  <li>模板（Templates）</li>
+  <li>
+    <p>数据字典(Data Dictionaries)</p>
+  </li>
+  <li><code>模板</code></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> <span class="nt">&lt;html&gt;</span>
+<span class="lineno">2</span> 	<span class="nt">&lt;head&gt;</span>
+<span class="lineno">3</span> 	 	<span class="nt">&lt;title&gt;</span>{{TITLE}}<span class="nt">&lt;/title&gt;</span>{{META_TAGS}}
+<span class="lineno">4</span> 	<span class="nt">&lt;/head&gt;</span>
+<span class="lineno">5</span>    <span class="nt">&lt;body&gt;</span>
+<span class="lineno">6</span>    		{{BODY}}
+<span class="lineno">7</span>    	<span class="nt">&lt;/body&gt;</span>
+<span class="lineno">8</span> <span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<ul>
+  <li><code>字典</code></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> {
+<span class="lineno">2</span>  	&quot;TITLE&quot;: &quot;Template example&quot;,
+<span class="lineno">3</span>     &quot;BODY&quot;: &quot;This is a simple template example.\nIt&#39;s boring&quot;,
+<span class="lineno">4</span>     &quot;DATE&quot;: &quot;11/20/2005&quot;
+<span class="lineno">5</span> }</code></pre></div>
+
+<ul>
+  <li>经过Ctemplate模板引擎替换成</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> <span class="nt">&lt;html&gt;</span>
+<span class="lineno">2</span> 	<span class="nt">&lt;head&gt;</span>
+<span class="lineno">3</span> 		<span class="nt">&lt;title&gt;</span>Template example<span class="nt">&lt;/title&gt;</span>
+<span class="lineno">4</span> 	<span class="nt">&lt;/head&gt;</span>
+<span class="lineno">5</span>    <span class="nt">&lt;body&gt;</span>
+<span class="lineno">6</span>    		This is a simple template example.It&#39;s boring
+<span class="lineno">7</span>    <span class="nt">&lt;/body&gt;</span>
+<span class="lineno">8</span> <span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<p>注意：变量不要求全都有，可以相互冗余或缺少。比如字典里没有META_TAGS而模板里没DATE。</p>
+
+<h3 id="section-2">代码实现</h3>
+<p>        有了上面抽象的基本原理，我们来看下简单的代码实现:<br /></p>
+
+<h4 id="tpl">首先得建立一个模板文件.tpl</h4>
+
+<ul>
+  <li>example.tpl</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> <span class="nt">&lt;html&gt;</span>
+<span class="lineno">2</span>    	Hello {{NAME}},
+<span class="lineno">3</span>    	You have just won ${{VALUE}}!
+<span class="lineno">4</span>    	{{#IN_CA}}Well, ${{TAXED_VALUE}}, after taxes.{{/IN_CA}}
+<span class="lineno">5</span> <span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<h4 id="cc">然后建立C/C++程序</h4>
+
+<ul>
+  <li>example.cc</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> #include <span class="nt">&lt;stdlib.h&gt;</span>
+<span class="lineno"> 2</span> #include <span class="nt">&lt;string&gt;</span>
+<span class="lineno"> 3</span> #include <span class="nt">&lt;iostream&gt;</span>
+<span class="lineno"> 4</span> /*
+<span class="lineno"> 5</span> 编译完成后添加这个头文件
+<span class="lineno"> 6</span> */
+<span class="lineno"> 7</span> #include <span class="nt">&lt;ctemplate</span><span class="err">/</span><span class="na">template</span><span class="err">.</span><span class="na">h</span><span class="nt">&gt;</span>
+<span class="lineno"> 8</span> int main(int argc, char** argv) {
+<span class="lineno"> 9</span> 	/*
+<span class="lineno">10</span> 	 创建字典，名字叫example
+<span class="lineno">11</span> 	*/
+<span class="lineno">12</span>    ctemplate::TemplateDictionary dict(&quot;example&quot;);
+<span class="lineno">13</span>    
+<span class="lineno">14</span>    /*
+<span class="lineno">15</span>    	字典是以key-value的形式，这里通过类方法设置
+<span class="lineno">16</span>    */
+<span class="lineno">17</span>    dict.SetValue(&quot;NAME&quot;, &quot;John Smith&quot;);
+<span class="lineno">18</span>       int winnings = rand() % 100000;
+<span class="lineno">19</span>       dict.SetIntValue(&quot;VALUE&quot;, winnings);
+<span class="lineno">20</span>       dict.SetFormattedValue(&quot;TAXED_VALUE&quot;, &quot;%.2f&quot;, winnings * 0.83);
+<span class="lineno">21</span>       // For now, assume everyone lives in CA.
+<span class="lineno">22</span>       // (Try running the program with a 0 here instead!)
+<span class="lineno">23</span>       if (1) {
+<span class="lineno">24</span>         dict.ShowSection(&quot;IN_CA&quot;);
+<span class="lineno">25</span>       }
+<span class="lineno">26</span>    /*
+<span class="lineno">27</span>    	声明一个string变量，将example.tpl写入
+<span class="lineno">28</span>    */
+<span class="lineno">29</span>       std::string output;
+<span class="lineno">30</span>       ctemplate::ExpandTemplate(&quot;example.tpl&quot;, ctemplate::DO_NOT_STRIP, <span class="err">&amp;</span>dict, <span class="ni">&amp;output);</span>
+<span class="lineno">31</span>       
+<span class="lineno">32</span>     /*
+<span class="lineno">33</span>     输出这个页面
+<span class="lineno">34</span>     */
+<span class="lineno">35</span>       std::cout <span class="err">&lt;</span><span class="nt">&lt; output</span><span class="err">;</span>
+<span class="lineno">36</span>       <span class="na">return</span> <span class="na">0</span><span class="err">;</span>
+<span class="lineno">37</span>    <span class="err">}</span></code></pre></div>
+
+<h4 id="section-3">编译链接</h4>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> gcc -o example example.cc -lctemplate_nothreads
+<span class="lineno">2</span> /*
+<span class="lineno">3</span> 	I can use the &quot;nothreads&quot; library because example.cc doesn&#39;t use threads. If example.cc were threaded, I would do something like this instead:
+<span class="lineno">4</span> */
+<span class="lineno">5</span> gcc -o example example.cc -lctemplate -pthread</code></pre></div>
+
+<h4 id="templates">模板（Templates）</h4>
+<ul>
+  <li>变量</li>
+  <li>开始结束…</li>
+  <li>包含</li>
+  <li>注释</li>
+</ul>
+
+<h4 id="section-4">字典</h4>
+<p>后台程序负责生成字典
+key-value模式，key肯定得是字符串，value可以是变量（variable），章节（section）或者是子模板（template-include）。</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=高可用聊天室构建实习故事III%20Google%20Ctemplate&amp;url=/study/Google%20Ctemplate/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/Google%20Ctemplate/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/Google%20Ctemplate/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-09-29T00:00:41Z" itemprop="dateModified">September 29, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	// var disqus_shortname = '';
+	var disqus_shortname = 'supery';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

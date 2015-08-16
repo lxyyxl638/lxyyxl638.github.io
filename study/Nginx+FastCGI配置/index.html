@@ -397,7 +397,15 @@
 <span class="lineno">4</span> 	include fastcgi_params;
 <span class="lineno">5</span> }</code></pre></div>
 
-<p>4）打开浏览器输入
+<p>4）重启nginx或者重新加载配置文件</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> kill -HUP [pid]
+<span class="lineno">2</span> 或者
+<span class="lineno">3</span> 重启
+<span class="lineno">4</span> killall nginx
+<span class="lineno">5</span> ./nginxs</code></pre></div>
+
+<p>5)打开浏览器输入
 http://localhost/demo.cgi（这里只要后缀是.cgi就可以）</p>
 
 <h3 id="section-3">备注：</h3>
@@ -445,7 +453,8 @@ http://localhost/demo.cgi（这里只要后缀是.cgi就可以）</p>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
 	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-	var disqus_shortname = '';
+	// var disqus_shortname = '';
+	var disqus_shortname = 'supery';
 
 	/* * * DON'T EDIT BELOW THIS LINE * * */
 	(function() {

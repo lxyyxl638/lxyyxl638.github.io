@@ -7,7 +7,7 @@
   <subtitle>My Life</subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/" rel="alternate" type="text/html"/>
-  <updated>2015-07-26T10:35:32+08:00</updated>
+  <updated>2015-08-16T23:10:39+08:00</updated>
   <id>/</id>
   <author>
     <name>Carson Lin</name>
@@ -15,6 +15,221 @@
     <email>carsonxiaoyang@gmail.com</email>
   </author>
 
+  
+  <entry>
+    <title>高可用聊天室构建实习故事III Google Ctemplate</title>
+    <link href="/study/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <updated>2015-07-29T00:00:00+08:00</updated>
+    <id>/study/Unix网络编程学习</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;Ctemplate System由两部分组成
+-	模板（Templates）
+-	数据字典(Data Dictionaries)&lt;/p&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;梗概&lt;/h4&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;细节&lt;/h4&gt;
+
+&lt;p&gt;redis的INCR是原子操作，x = x + 1不是原子操作&lt;/p&gt;
+
+&lt;p&gt;C客户端
+https://github.com/redis/hiredis&lt;/p&gt;
+
+&lt;p&gt;3、4、6、7、8、14&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>高可用聊天室构建实习故事III Google Ctemplate</title>
+    <link href="/study/Session%20id%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <updated>2015-07-29T00:00:00+08:00</updated>
+    <id>/study/Session id的实现</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;Ctemplate System由两部分组成
+-	模板（Templates）
+-	数据字典(Data Dictionaries)&lt;/p&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;梗概&lt;/h4&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;细节&lt;/h4&gt;
+
+&lt;p&gt;redis的INCR是原子操作，x = x + 1不是原子操作&lt;/p&gt;
+
+&lt;p&gt;C客户端
+https://github.com/redis/hiredis&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>高可用聊天室构建实习故事III Google Ctemplate</title>
+    <link href="/study/Google%20Ctemplate/"/>
+    <updated>2015-07-27T00:00:00+08:00</updated>
+    <id>/study/Google Ctemplate</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;h3 id=&quot;section&quot;&gt;前言：&lt;/h3&gt;
+&lt;p&gt;        由于采用没有采用任何框架，所以很多工具都得自己造或者用第三方库拼拼凑凑。这一章来讲述一下使用C++模板引擎Google Ctemplate搭建自己简易的MVC框架。&lt;br /&gt;
+        使用模板引擎的目的是为了将数据和样式分离开。这样就不用生硬地将数据嵌在样式代码里了。&lt;br /&gt;
+        回忆下我们第一章的CGI程序demo，我们需要将整个HTML文件按标准输出的格式输出。&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; while (FCGI_Accept() &amp;gt;= 0) { 
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; printf(&amp;quot;Content-type: text/html\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	&amp;quot;\r\n&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	&amp;quot;&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; 	&amp;quot;FastCGI Hello!&amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; 	&amp;quot;Request number %d running on host%s &amp;quot; 
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; 	&amp;quot;Process ID: %d\n&amp;quot;, ++count, getenv(&amp;quot;SERVER_NAME&amp;quot;), getpid()); 
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;        这里有两个变量，count和getpid()。如果不将数据和样式分离，当有几十个变量的时候这个printf函数就会很长很难看，而且无法像一个简单的html页面一样可以很方便地调试。&lt;br /&gt;
+        Ctemplate网上找不到中文文档，但是因为其本身自带的文档已经写得很详细，所以本章仅对重要部分按照我的理解进行阐述，并列举几个比较重要的部分。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;梗概&lt;/h3&gt;
+&lt;p&gt;        让我们先对Ctemplate有一个感性的了解。它由两部分组成:&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;模板（Templates）&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;数据字典(Data Dictionaries)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;模板&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;{{TITLE}}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;{{META_TAGS}}
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;    &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;    		{{BODY}}
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;    	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;字典&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; {
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;  	&amp;quot;TITLE&amp;quot;: &amp;quot;Template example&amp;quot;,
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &amp;quot;BODY&amp;quot;: &amp;quot;This is a simple template example.\nIt&amp;#39;s boring&amp;quot;,
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &amp;quot;DATE&amp;quot;: &amp;quot;11/20/2005&amp;quot;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;经过Ctemplate模板引擎替换成&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 		&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Template example&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;    &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;    		This is a simple template example.It&amp;#39;s boring
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;注意：变量不要求全都有，可以相互冗余或缺少。比如字典里没有META_TAGS而模板里没DATE。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;代码实现&lt;/h3&gt;
+&lt;p&gt;        有了上面抽象的基本原理，我们来看下简单的代码实现:&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;tpl&quot;&gt;首先得建立一个模板文件.tpl&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;example.tpl&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;    	Hello {{NAME}},
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;    	You have just won ${{VALUE}}!
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;    	{{#IN_CA}}Well, ${{TAXED_VALUE}}, after taxes.{{/IN_CA}}
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;cc&quot;&gt;然后建立C/C++程序&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;example.cc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; /*
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; 编译完成后添加这个头文件
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; */
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; #include &lt;span class=&quot;nt&quot;&gt;&amp;lt;ctemplate&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; int main(int argc, char** argv) {
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; 	/*
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; 	 创建字典，名字叫example
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; 	*/
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;    ctemplate::TemplateDictionary dict(&amp;quot;example&amp;quot;);
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;    
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;    /*
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;    	字典是以key-value的形式，这里通过类方法设置
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;    */
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;    dict.SetValue(&amp;quot;NAME&amp;quot;, &amp;quot;John Smith&amp;quot;);
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;       int winnings = rand() % 100000;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;       dict.SetIntValue(&amp;quot;VALUE&amp;quot;, winnings);
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;       dict.SetFormattedValue(&amp;quot;TAXED_VALUE&amp;quot;, &amp;quot;%.2f&amp;quot;, winnings * 0.83);
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;       // For now, assume everyone lives in CA.
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;       // (Try running the program with a 0 here instead!)
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;       if (1) {
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;         dict.ShowSection(&amp;quot;IN_CA&amp;quot;);
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;       }
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt;    /*
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt;    	声明一个string变量，将example.tpl写入
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt;    */
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt;       std::string output;
+&lt;span class=&quot;lineno&quot;&gt;30&lt;/span&gt;       ctemplate::ExpandTemplate(&amp;quot;example.tpl&amp;quot;, ctemplate::DO_NOT_STRIP, &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt;dict, &lt;span class=&quot;ni&quot;&gt;&amp;amp;output);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;31&lt;/span&gt;       
+&lt;span class=&quot;lineno&quot;&gt;32&lt;/span&gt;     /*
+&lt;span class=&quot;lineno&quot;&gt;33&lt;/span&gt;     输出这个页面
+&lt;span class=&quot;lineno&quot;&gt;34&lt;/span&gt;     */
+&lt;span class=&quot;lineno&quot;&gt;35&lt;/span&gt;       std::cout &lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt; output&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;36&lt;/span&gt;       &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;37&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;编译链接&lt;/h4&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; gcc -o example example.cc -lctemplate_nothreads
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; /*
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	I can use the &amp;quot;nothreads&amp;quot; library because example.cc doesn&amp;#39;t use threads. If example.cc were threaded, I would do something like this instead:
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; */
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; gcc -o example example.cc -lctemplate -pthread&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;templates&quot;&gt;模板（Templates）&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;变量&lt;/li&gt;
+  &lt;li&gt;开始结束…&lt;/li&gt;
+  &lt;li&gt;包含&lt;/li&gt;
+  &lt;li&gt;注释&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;字典&lt;/h4&gt;
+&lt;p&gt;后台程序负责生成字典
+key-value模式，key肯定得是字符串，value可以是变量（variable），章节（section）或者是子模板（template-include）。&lt;/p&gt;
+
+
+    </content>
+  </entry>
   
   <entry>
     <title>高可用聊天室构建实习故事II Nginx+FastCGI配置二</title>
@@ -404,7 +619,15 @@
 &lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 	include fastcgi_params;
 &lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;4）打开浏览器输入
+&lt;p&gt;4）重启nginx或者重新加载配置文件&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; kill -HUP [pid]
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 或者
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 重启
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; killall nginx
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; ./nginxs&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;5)打开浏览器输入
 http://localhost/demo.cgi（这里只要后缀是.cgi就可以）&lt;/p&gt;
 
 &lt;h3 id=&quot;section-3&quot;&gt;备注：&lt;/h3&gt;
@@ -446,7 +669,29 @@ http://localhost/demo.cgi（这里只要后缀是.cgi就可以）&lt;/p&gt;
 
 &lt;h3 id=&quot;javascript&quot;&gt;javascript篇&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;1、使用webuploader时选择按钮死活无效，调了半天才发现是js文件重名了，虽然是放在不同文件目录下。修改其中一个的文件名即可解决。
+
+2、使用AJAX的时候会存在一个异步问题，所以若要根据AJAX返回结果进行处理的话，必须放在回调函数里
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;mysql&quot;&gt;MySQL篇&lt;/h3&gt;
+&lt;p&gt;http://blog.chinaunix.net/uid-20639775-id-3249105.html&lt;/p&gt;
+
+&lt;p&gt;1、主机连接虚拟机MySQL,权限控制
+2、MySQL找不到mysqld.sock
+3、MySQL包的组成&lt;/p&gt;
+
+&lt;p&gt;MySQL C API 每一次query如果产生结果集，那么都得调用mysql_free_result释放&lt;/p&gt;
+
+&lt;h3 id=&quot;git&quot;&gt;Git篇&lt;/h3&gt;
+
+&lt;h4 id=&quot;redis&quot;&gt;Redis篇&lt;/h4&gt;
+&lt;p&gt;example.c:(.text+0x319): undefined reference to `freeReplyObject’
+g++ -lhiredis，需要链接的库都在/usr/local/include,学习了g++链接库&lt;/p&gt;
+
+&lt;p&gt;http://blog.csdn.net/sahusoft/article/details/7388617&lt;/p&gt;
+
+&lt;h3 id=&quot;c&quot;&gt;C++&lt;/h3&gt;
+&lt;p&gt;char *强转string的时候不能为空，不然会报错&lt;/p&gt;
 
     </content>
   </entry>
