@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>UNIX环境高级编程学习笔记一 • Carson的博客</title>
+    <meta name="description" content="前言
+        这阵子得系统地学习下unix编程，学习的资料便是大名鼎鼎的W.Richard Stevens的《Unix环境高级编程》。要坚持写下学习笔记。这一篇主要是对Unix一些基本概念和术语有个大概系统的了解。
+###unix体系结构
+        学习Unix编程的第一步当然是要对Unix的体系结构有个了解。特别是“内核”这个东西。Unix内核是一种操作系统，控制着计算机系统资源，提供程序运行环境，提供了和硬件交互的基本接口——系统调用，用户可以通过系统调用来与硬件进行交互，比如读写内存。&lt;/br&gt;
+        公用函数库是对系统调用进行了多一层的封装。Shell是一个程序，可以使用户通过命令行方便地与内核进行交互。&lt;/br&gt;
+        而我们一般用户使用的应用程序便是最外面一层，通过调用公用函数库或者直接调用系统调用来实现功能，比如写文件等等。&lt;/br&gt;
+        参照以下图片&lt;/br&gt;
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="UNIX环境高级编程学习笔记一">
+	<meta name="twitter:description" content="前言
+        这阵子得系统地学习下unix编程，学习的资料便是大名鼎鼎的W.Richard Stevens的《Unix环境高级编程》。要坚持写下学习笔记。这一篇主要是对Unix一些基本概念和术语有个大概系统的了解。
+###unix体系结构
+        学习Unix编程的第一步当然是要对Unix的体系结构有个了解。特别是“内核”这个东西。Unix内核是一种操作系统，控制着计算机系统资源，提供程序运行环境，提供了和硬件交互的基本接口——系统调用，用户可以通过系统调用来与硬件进行交互，比如读写内存。&lt;/br&gt;
+        公用函数库是对系统调用进行了多一层的封装。Shell是一个程序，可以使用户通过命令行方便地与内核进行交互。&lt;/br&gt;
+        而我们一般用户使用的应用程序便是最外面一层，通过调用公用函数库或者直接调用系统调用来实现功能，比如写文件等等。&lt;/br&gt;
+        参照以下图片&lt;/br&gt;
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="UNIX环境高级编程学习笔记一">
+	<meta property="og:description" content="前言
+        这阵子得系统地学习下unix编程，学习的资料便是大名鼎鼎的W.Richard Stevens的《Unix环境高级编程》。要坚持写下学习笔记。这一篇主要是对Unix一些基本概念和术语有个大概系统的了解。
+###unix体系结构
+        学习Unix编程的第一步当然是要对Unix的体系结构有个了解。特别是“内核”这个东西。Unix内核是一种操作系统，控制着计算机系统资源，提供程序运行环境，提供了和硬件交互的基本接口——系统调用，用户可以通过系统调用来与硬件进行交互，比如读写内存。&lt;/br&gt;
+        公用函数库是对系统调用进行了多一层的封装。Shell是一个程序，可以使用户通过命令行方便地与内核进行交互。&lt;/br&gt;
+        而我们一般用户使用的应用程序便是最外面一层，通过调用公用函数库或者直接调用系统调用来实现功能，比如写文件等等。&lt;/br&gt;
+        参照以下图片&lt;/br&gt;
+
+">
+	<meta property="og:url" content="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>UNIX环境高级编程学习笔记一</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">前言</h3>
+<p>        这阵子得系统地学习下unix编程，学习的资料便是大名鼎鼎的W.Richard Stevens的《Unix环境高级编程》。要坚持写下学习笔记。这一篇主要是对Unix一些基本概念和术语有个大概系统的了解。
+###unix体系结构
+        学习Unix编程的第一步当然是要对Unix的体系结构有个了解。特别是<code>“内核”</code>这个东西。Unix内核是一种操作系统，控制着计算机系统资源，提供程序运行环境，提供了和硬件交互的基本接口——系统调用，用户可以通过系统调用来与硬件进行交互，比如读写内存。&lt;/br&gt;
+        公用函数库是对系统调用进行了多一层的封装。Shell是一个程序，可以使用户通过命令行方便地与内核进行交互。&lt;/br&gt;
+        而我们一般用户使用的应用程序便是最外面一层，通过调用公用函数库或者直接调用系统调用来实现功能，比如写文件等等。&lt;/br&gt;
+        参照以下图片&lt;/br&gt;</p>
+
+<p>&lt;img src=”../../images/8-19-1.png” width=250&gt;</p>
+
+<p>        &lt;/br&gt;可以简单地理解成这是一个逐层封装简化操作接口的过程。但本质都是不变的，比如你可以通过记事本（应用程序）写文件，也可以直接在shell写文件。</p>
+
+<h3 id="section-1">口令文件</h3>
+<p>        一般在/etc/passwd，存放着用户的信息，比如用户ID，登录名，密码什么的。</p>
+
+<h3 id="section-2">输入输出</h3>
+<p>####文件描述符
+        顾名思义，<code>文件描述符</code>就是描述一个进程打开的文件。这样读写文件就可以用<code>文件描述符</code>进行操作
+####标准输入，标准输出，标准错误
+        这三个分别对应着三种文件描述符，都指向终端。每一个新程序运行，这三个文件描述符都会打开
+####不带缓冲的I/O
+        read,write,open,close,lseek，属于系统调用，在<unistd.h>里
+####带缓冲的I/O
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;就是标准I/O函数，如printf,getc，在<stdio.h>里</stdio.h></unistd.h></p>
+
+<h3 id="section-3">进程和程序</h3>
+<p>        进程就是一个被加载到内存的程序的活体，拥有地址空间，堆栈等资源。Unix每启动一个进程其实就是内核调用exec函数生出的init进程（进程号为1）的子进程。</p>
+
+<h3 id="section-4">出错处理</h3>
+<p>        errno为整型，在<errno.h>中。当Unix函数出错它便会被设置成一个值，但注意
+-	不出错不会清除，仅当出错的时候才会重写
+-	永远不会为0</errno.h></p>
+
+<p>        C标准里定义了两个函数，帮助打印出错信息。</p>
+<pre>
+char* strerror(int errnum)
+将errnum输出成对应的一条字符串。
+void perror(const char *msg)
+同理
+</pre>
+
+<h4 id="section-5">出错恢复</h4>
+<p>        <errno.h>中将出错分成致命性和非致命性的。致命性的只能输出错误信息然后终止，非致命性的还不至于要终止进程。</errno.h></p>
+
+<h3 id="section-6">用户标识</h3>
+<p>        Unix中用户使用<code>用户id</code>进程标识，用户还可以有附属属性<code>组id</code>。这样方便用户管理。</p>
+
+<h3 id="section-7">信号</h3>
+<p>        信号用来通知进程已发生某种情况。
+        信号处理方式：
+-	忽略信号
+-	按系统默认方式处理
+-	捕捉信号，用自编函数处理</p>
+
+<p>        比如<code>中断键</code>，<code>退出键</code>，<code>kill</code>都会向对应进程发送信号。</p>
+
+<h3 id="section-8">时间值</h3>
+<p>        Unix里用两个变量来表示时间</p>
+
+<ul>
+  <li>日历时间time_t</li>
+  <li>进程时间clock_t</li>
+</ul>
+
+<p>        这里有四个时间的定义</p>
+
+<ul>
+  <li>时钟时间=墙上始终时间，进程运行时间总量</li>
+  <li>用户CPU时间=执行用户指令所用时间</li>
+  <li>系统CPU时间=执行内核程序所用时间</li>
+  <li>CPU时间=用户CPU时间+系统CPU时间</li>
+</ul>
+
+<h3 id="section-9">系统调用和库函数</h3>
+<p>        如下图。系统调用提供了内核与用户进程交互的接口，库函数是在系统调用函数上又封装了一层。用户的应用代码可以调用库函数也可以直接调用系统调用函数。如malloc是库函数，但本质上是调用了sbrk这个系统调用函数。</p>
+
+<p>&lt;img src=”../../images/8-19-2.png” width=500&gt;</p>
+
+<h3 id="section-10">最后</h3>
+<p>        本章简单地总结了我对《Unix环境高级编程》第一章的简单理解。接下来会逐章深入学习</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=UNIX环境高级编程学习笔记一&amp;url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-08-21T00:00:41Z" itemprop="dateModified">August 21, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	// var disqus_shortname = '';
+	var disqus_shortname = 'supery';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/study/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2015-07-29T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>/study/Session%20id%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2015-07-29T00:00:00+08:00</lastmod>
+    <loc>/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2015-08-19T00:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -52,43 +47,43 @@
   </url>
   <url>
     <loc>/articles/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>/getting-started/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>/about/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>/study/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>/terms/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>/life/</loc>
-    <lastmod>2015-08-16T23:10:39+08:00</lastmod>
+    <lastmod>2015-08-22T13:36:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

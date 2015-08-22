@@ -7,7 +7,7 @@
   <subtitle>My Life</subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/" rel="alternate" type="text/html"/>
-  <updated>2015-08-16T23:10:39+08:00</updated>
+  <updated>2015-08-22T13:36:11+08:00</updated>
   <id>/</id>
   <author>
     <name>Carson Lin</name>
@@ -17,10 +17,10 @@
 
   
   <entry>
-    <title>高可用聊天室构建实习故事III Google Ctemplate</title>
-    <link href="/study/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
-    <updated>2015-07-29T00:00:00+08:00</updated>
-    <id>/study/Unix网络编程学习</id>
+    <title>UNIX环境高级编程学习笔记一</title>
+    <link href="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <updated>2015-08-19T00:00:00+08:00</updated>
+    <id>/study/unix环境高级编程学习</id>
     <author>
       <name>Carson Lin</name>
       <uri>/</uri>
@@ -28,48 +28,86 @@
     </author>
     <content type="html">
       
-      &lt;p&gt;Ctemplate System由两部分组成
--	模板（Templates）
--	数据字典(Data Dictionaries)&lt;/p&gt;
+      &lt;h3 id=&quot;section&quot;&gt;前言&lt;/h3&gt;
+&lt;p&gt;        这阵子得系统地学习下unix编程，学习的资料便是大名鼎鼎的W.Richard Stevens的《Unix环境高级编程》。要坚持写下学习笔记。这一篇主要是对Unix一些基本概念和术语有个大概系统的了解。
+###unix体系结构
+        学习Unix编程的第一步当然是要对Unix的体系结构有个了解。特别是&lt;code&gt;“内核”&lt;/code&gt;这个东西。Unix内核是一种操作系统，控制着计算机系统资源，提供程序运行环境，提供了和硬件交互的基本接口——系统调用，用户可以通过系统调用来与硬件进行交互，比如读写内存。&amp;lt;/br&amp;gt;
+        公用函数库是对系统调用进行了多一层的封装。Shell是一个程序，可以使用户通过命令行方便地与内核进行交互。&amp;lt;/br&amp;gt;
+        而我们一般用户使用的应用程序便是最外面一层，通过调用公用函数库或者直接调用系统调用来实现功能，比如写文件等等。&amp;lt;/br&amp;gt;
+        参照以下图片&amp;lt;/br&amp;gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;section&quot;&gt;梗概&lt;/h4&gt;
+&lt;p&gt;&amp;lt;img src=”../../images/8-19-1.png” width=250&amp;gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;细节&lt;/h4&gt;
+&lt;p&gt;        &amp;lt;/br&amp;gt;可以简单地理解成这是一个逐层封装简化操作接口的过程。但本质都是不变的，比如你可以通过记事本（应用程序）写文件，也可以直接在shell写文件。&lt;/p&gt;
 
-&lt;p&gt;redis的INCR是原子操作，x = x + 1不是原子操作&lt;/p&gt;
+&lt;h3 id=&quot;section-1&quot;&gt;口令文件&lt;/h3&gt;
+&lt;p&gt;        一般在/etc/passwd，存放着用户的信息，比如用户ID，登录名，密码什么的。&lt;/p&gt;
 
-&lt;p&gt;C客户端
-https://github.com/redis/hiredis&lt;/p&gt;
+&lt;h3 id=&quot;section-2&quot;&gt;输入输出&lt;/h3&gt;
+&lt;p&gt;####文件描述符
+        顾名思义，&lt;code&gt;文件描述符&lt;/code&gt;就是描述一个进程打开的文件。这样读写文件就可以用&lt;code&gt;文件描述符&lt;/code&gt;进行操作
+####标准输入，标准输出，标准错误
+        这三个分别对应着三种文件描述符，都指向终端。每一个新程序运行，这三个文件描述符都会打开
+####不带缓冲的I/O
+        read,write,open,close,lseek，属于系统调用，在&lt;unistd.h&gt;里
+####带缓冲的I/O
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;就是标准I/O函数，如printf,getc，在&lt;stdio.h&gt;里&lt;/stdio.h&gt;&lt;/unistd.h&gt;&lt;/p&gt;
 
-&lt;p&gt;3、4、6、7、8、14&lt;/p&gt;
+&lt;h3 id=&quot;section-3&quot;&gt;进程和程序&lt;/h3&gt;
+&lt;p&gt;        进程就是一个被加载到内存的程序的活体，拥有地址空间，堆栈等资源。Unix每启动一个进程其实就是内核调用exec函数生出的init进程（进程号为1）的子进程。&lt;/p&gt;
 
-    </content>
-  </entry>
-  
-  <entry>
-    <title>高可用聊天室构建实习故事III Google Ctemplate</title>
-    <link href="/study/Session%20id%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
-    <updated>2015-07-29T00:00:00+08:00</updated>
-    <id>/study/Session id的实现</id>
-    <author>
-      <name>Carson Lin</name>
-      <uri>/</uri>
-      <email>carsonxiaoyang@gmail.com</email>
-    </author>
-    <content type="html">
-      
-      &lt;p&gt;Ctemplate System由两部分组成
--	模板（Templates）
--	数据字典(Data Dictionaries)&lt;/p&gt;
+&lt;h3 id=&quot;section-4&quot;&gt;出错处理&lt;/h3&gt;
+&lt;p&gt;        errno为整型，在&lt;errno.h&gt;中。当Unix函数出错它便会被设置成一个值，但注意
+-	不出错不会清除，仅当出错的时候才会重写
+-	永远不会为0&lt;/errno.h&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;section&quot;&gt;梗概&lt;/h4&gt;
+&lt;p&gt;        C标准里定义了两个函数，帮助打印出错信息。&lt;/p&gt;
+&lt;pre&gt;
+char* strerror(int errnum)
+将errnum输出成对应的一条字符串。
+void perror(const char *msg)
+同理
+&lt;/pre&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;细节&lt;/h4&gt;
+&lt;h4 id=&quot;section-5&quot;&gt;出错恢复&lt;/h4&gt;
+&lt;p&gt;        &lt;errno.h&gt;中将出错分成致命性和非致命性的。致命性的只能输出错误信息然后终止，非致命性的还不至于要终止进程。&lt;/errno.h&gt;&lt;/p&gt;
 
-&lt;p&gt;redis的INCR是原子操作，x = x + 1不是原子操作&lt;/p&gt;
+&lt;h3 id=&quot;section-6&quot;&gt;用户标识&lt;/h3&gt;
+&lt;p&gt;        Unix中用户使用&lt;code&gt;用户id&lt;/code&gt;进程标识，用户还可以有附属属性&lt;code&gt;组id&lt;/code&gt;。这样方便用户管理。&lt;/p&gt;
 
-&lt;p&gt;C客户端
-https://github.com/redis/hiredis&lt;/p&gt;
+&lt;h3 id=&quot;section-7&quot;&gt;信号&lt;/h3&gt;
+&lt;p&gt;        信号用来通知进程已发生某种情况。
+        信号处理方式：
+-	忽略信号
+-	按系统默认方式处理
+-	捕捉信号，用自编函数处理&lt;/p&gt;
+
+&lt;p&gt;        比如&lt;code&gt;中断键&lt;/code&gt;，&lt;code&gt;退出键&lt;/code&gt;，&lt;code&gt;kill&lt;/code&gt;都会向对应进程发送信号。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;时间值&lt;/h3&gt;
+&lt;p&gt;        Unix里用两个变量来表示时间&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;日历时间time_t&lt;/li&gt;
+  &lt;li&gt;进程时间clock_t&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;        这里有四个时间的定义&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;时钟时间=墙上始终时间，进程运行时间总量&lt;/li&gt;
+  &lt;li&gt;用户CPU时间=执行用户指令所用时间&lt;/li&gt;
+  &lt;li&gt;系统CPU时间=执行内核程序所用时间&lt;/li&gt;
+  &lt;li&gt;CPU时间=用户CPU时间+系统CPU时间&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;系统调用和库函数&lt;/h3&gt;
+&lt;p&gt;        如下图。系统调用提供了内核与用户进程交互的接口，库函数是在系统调用函数上又封装了一层。用户的应用代码可以调用库函数也可以直接调用系统调用函数。如malloc是库函数，但本质上是调用了sbrk这个系统调用函数。&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;img src=”../../images/8-19-2.png” width=500&amp;gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-10&quot;&gt;最后&lt;/h3&gt;
+&lt;p&gt;        本章简单地总结了我对《Unix环境高级编程》第一章的简单理解。接下来会逐章深入学习&lt;/p&gt;
 
     </content>
   </entry>
