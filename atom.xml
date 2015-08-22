@@ -7,7 +7,7 @@
   <subtitle>My Life</subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/" rel="alternate" type="text/html"/>
-  <updated>2015-08-22T13:57:33+08:00</updated>
+  <updated>2015-08-22T15:05:59+08:00</updated>
   <id>/</id>
   <author>
     <name>Carson Lin</name>
@@ -17,7 +17,7 @@
 
   
   <entry>
-    <title>UNIX环境高级编程学习笔记一</title>
+    <title>UNIX环境高级编程学习笔记二</title>
     <link href="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/"/>
     <updated>2015-08-21T00:00:00+08:00</updated>
     <id>/study/unix环境高级编程学习二</id>
@@ -29,6 +29,78 @@
     <content type="html">
       
       &lt;h3 id=&quot;section&quot;&gt;前言&lt;/h3&gt;
+&lt;p&gt;        第二章&lt;code&gt;UNIX标准化及实现&lt;/code&gt;的学习笔记&lt;/p&gt;
+
+&lt;h3 id=&quot;unix&quot;&gt;UNIX标准化&lt;/h3&gt;
+&lt;p&gt;        由于Unix的盛行，制定标准是必须的事情，不然就不同厂商做的都不一样，程序的移植性就非常的差。从而有了以下三个标准：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ISO C&lt;/li&gt;
+  &lt;li&gt;IEEE POSIX&lt;/li&gt;
+  &lt;li&gt;Single UNIX Specification&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;    三个标准，是接口的规范，厂商根据接口规范编程具体实现&lt;/p&gt;
+
+&lt;h3 id=&quot;unix-1&quot;&gt;UNIX系统实现&lt;/h3&gt;
+&lt;p&gt;        有了标准，厂商就得根据标准做具体的实现，于是有了三个分支&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;AT&amp;amp;T分支(UNIX的商用版本)&lt;/li&gt;
+  &lt;li&gt;加州大学伯克利分校分支&lt;/li&gt;
+  &lt;li&gt;AT&amp;amp;T不断开发的UNIX研究版本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;        三个分支对应了以下的版本&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SVR4(UNIX System V Release 4)&lt;/li&gt;
+  &lt;li&gt;4.4BSD(Berkeley Software Distribution)&lt;/li&gt;
+  &lt;li&gt;FreeBSD&lt;/li&gt;
+  &lt;li&gt;Linux&lt;/li&gt;
+  &lt;li&gt;Mac OS X,核心是Darwin，是一种Unix-like操作系统&lt;/li&gt;
+  &lt;li&gt;Solaris，基于SVR4	&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;        这几种都不同程度上符合POSIX标准。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;限制&lt;/h3&gt;
+&lt;p&gt;        为了软件移植性（比如不同系统允许打开的文件描述符最大值不同），必须在以下两方面提供限制&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;编译时限制（短整型的最大值是多少）&lt;/li&gt;
+  &lt;li&gt;运行时限制（文件名有多少字符）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;        编译时限制在头文件中定义，运行时限制要求进程调用一个函数获得限制值。&lt;br /&gt;
+        比如文件名可以有多少字符取决于文件系统，因此只能在运行时调用函数获取该系统的长度限制。为了可移植性不能写在头文件里。&lt;br /&gt;
+        下面3种限制是为了解决这个问题&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;头文件（编译时限制）&lt;/li&gt;
+  &lt;li&gt;与文件或目录无关的运行时限制(sysconf函数)&lt;/li&gt;
+  &lt;li&gt;与文件或目录有关的运行时限制(pathconf和fpathconf函数)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;        相应的各个标准的限制如下&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;ISO C限制
+    编译时限制都在&lt;limits.h&gt;中，定义了各种类型的上下限&lt;/limits.h&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;POSIX&lt;/li&gt;
+  &lt;li&gt;XSI限制&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sysconfpathconffpathconf&quot;&gt;sysconf,pathconf,fpathconf&lt;/h4&gt;
+&lt;p&gt;        这三个函数定义了运行时限制，比如同个系统但使用了不同文件系统导致的不同。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;基本系统数据类型&lt;/h3&gt;
+&lt;p&gt;        &amp;lt;sys/types.h&amp;gt;定义了clock_t等基本系统数据类型&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;标准间冲突&lt;/h3&gt;
+&lt;p&gt;        有冲突时，POSIX服从ISO标准。&lt;/p&gt;
 
     </content>
   </entry>

@@ -2,16 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>UNIX环境高级编程学习笔记一 • Carson的博客</title>
+    <title>UNIX环境高级编程学习笔记二 • Carson的博客</title>
     <meta name="description" content="前言
+        第二章UNIX标准化及实现的学习笔记
 
 ">
     <meta name="keywords" content="sample">
     
     
     	<!-- Twitter Cards -->
-	<meta name="twitter:title" content="UNIX环境高级编程学习笔记一">
+	<meta name="twitter:title" content="UNIX环境高级编程学习笔记二">
 	<meta name="twitter:description" content="前言
+        第二章UNIX标准化及实现的学习笔记
 
 ">
 	
@@ -23,8 +25,9 @@
 	<!-- Open Graph -->
 	<meta property="og:locale" content="">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="UNIX环境高级编程学习笔记一">
+	<meta property="og:title" content="UNIX环境高级编程学习笔记二">
 	<meta property="og:description" content="前言
+        第二章UNIX标准化及实现的学习笔记
 
 ">
 	<meta property="og:url" content="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/">
@@ -149,11 +152,83 @@
   </nav><!-- /.breadcrumbs -->
 
 		<div class="page-title">
-			<h1>UNIX环境高级编程学习笔记一</h1>
+			<h1>UNIX环境高级编程学习笔记二</h1>
 		</div>
 		<div class="inner-wrap">
 			<div id="content" class="page-content" itemprop="articleBody">
 				<h3 id="section">前言</h3>
+<p>        第二章<code>UNIX标准化及实现</code>的学习笔记</p>
+
+<h3 id="unix">UNIX标准化</h3>
+<p>        由于Unix的盛行，制定标准是必须的事情，不然就不同厂商做的都不一样，程序的移植性就非常的差。从而有了以下三个标准：</p>
+
+<ul>
+  <li>ISO C</li>
+  <li>IEEE POSIX</li>
+  <li>Single UNIX Specification</li>
+</ul>
+
+<p>    三个标准，是接口的规范，厂商根据接口规范编程具体实现</p>
+
+<h3 id="unix-1">UNIX系统实现</h3>
+<p>        有了标准，厂商就得根据标准做具体的实现，于是有了三个分支</p>
+
+<ul>
+  <li>AT&amp;T分支(UNIX的商用版本)</li>
+  <li>加州大学伯克利分校分支</li>
+  <li>AT&amp;T不断开发的UNIX研究版本</li>
+</ul>
+
+<p>        三个分支对应了以下的版本</p>
+
+<ul>
+  <li>SVR4(UNIX System V Release 4)</li>
+  <li>4.4BSD(Berkeley Software Distribution)</li>
+  <li>FreeBSD</li>
+  <li>Linux</li>
+  <li>Mac OS X,核心是Darwin，是一种Unix-like操作系统</li>
+  <li>Solaris，基于SVR4	</li>
+</ul>
+
+<p>        这几种都不同程度上符合POSIX标准。</p>
+
+<h3 id="section-1">限制</h3>
+<p>        为了软件移植性（比如不同系统允许打开的文件描述符最大值不同），必须在以下两方面提供限制</p>
+
+<ul>
+  <li>编译时限制（短整型的最大值是多少）</li>
+  <li>运行时限制（文件名有多少字符）</li>
+</ul>
+
+<p>        编译时限制在头文件中定义，运行时限制要求进程调用一个函数获得限制值。<br />
+        比如文件名可以有多少字符取决于文件系统，因此只能在运行时调用函数获取该系统的长度限制。为了可移植性不能写在头文件里。<br />
+        下面3种限制是为了解决这个问题</p>
+
+<ul>
+  <li>头文件（编译时限制）</li>
+  <li>与文件或目录无关的运行时限制(sysconf函数)</li>
+  <li>与文件或目录有关的运行时限制(pathconf和fpathconf函数)</li>
+</ul>
+
+<p>        相应的各个标准的限制如下</p>
+
+<ul>
+  <li>
+    <p>ISO C限制
+    编译时限制都在<limits.h>中，定义了各种类型的上下限</limits.h></p>
+  </li>
+  <li>POSIX</li>
+  <li>XSI限制</li>
+</ul>
+
+<h4 id="sysconfpathconffpathconf">sysconf,pathconf,fpathconf</h4>
+<p>        这三个函数定义了运行时限制，比如同个系统但使用了不同文件系统导致的不同。</p>
+
+<h3 id="section-2">基本系统数据类型</h3>
+<p>        &lt;sys/types.h&gt;定义了clock_t等基本系统数据类型</p>
+
+<h3 id="section-3">标准间冲突</h3>
+<p>        有冲突时，POSIX服从ISO标准。</p>
 
 				<hr />
 				<footer class="page-footer">
@@ -168,12 +243,12 @@
 	<p class="author-bio">用心生活</p>
 </div><!-- ./author-content -->
 					<div class="inline-btn">
-	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=UNIX环境高级编程学习笔记一&amp;url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=UNIX环境高级编程学习笔记二&amp;url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
 	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
 	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
 </div><!-- /.share-this -->
 					<div class="page-meta">
-	<p>Updated <time datetime="2015-08-21T00:00:41Z" itemprop="dateModified">August 21, 2015</time>
+	<p>Updated <time datetime="2015-08-23T00:00:41Z" itemprop="dateModified">August 23, 2015</time>
 </div><!-- /.page-meta -->
 				</footer><!-- /.footer -->
 				<aside>
