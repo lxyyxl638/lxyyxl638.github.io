@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>UNIX环境高级编程学习笔记三 • Carson的博客</title>
+    <meta name="description" content="前言
+        这一次学习文件I/O，属于不带缓冲的I/O，每个read/write都调用内核中的一个系统调用。
+
+">
+    <meta name="keywords" content="sample">
+    
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="UNIX环境高级编程学习笔记三">
+	<meta name="twitter:description" content="前言
+        这一次学习文件I/O，属于不带缓冲的I/O，每个read/write都调用内核中的一个系统调用。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/120x120.gif">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="UNIX环境高级编程学习笔记三">
+	<meta property="og:description" content="前言
+        这一次学习文件I/O，属于不带缓冲的I/O，每个read/write都调用内核中的一个系统调用。
+
+">
+	<meta property="og:url" content="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/">
+	<meta property="og:site_name" content="Carson的博客">
+
+    <link rel="canonical" href="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Carson的博客 Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">Carson的博客</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Carson的博客</a></li>
+	
+    
+        
+    
+    <li><a href="/" >首页</a></li>
+  
+    
+        
+    
+    <li><a href="/study/" >学习</a></li>
+  
+    
+        
+    
+    <li><a href="/life/" >生活</a></li>
+  
+    
+        
+    
+    <li><a href="/articles/" >随笔</a></li>
+  
+    
+        
+    
+    <li><a href="/about/" >关于我</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Carson的博客 <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <!--  -->
+        <div class="title">首页</div>
+        <p class="excerpt">首页</p>
+      </a>
+    </li><li>
+      <a href="/study/">
+        <!--  -->
+        <div class="title">学习</div>
+        <p class="excerpt">学习</p>
+      </a>
+    </li><li>
+      <a href="/life/">
+        <!--  -->
+        <div class="title">生活</div>
+        <p class="excerpt">生活</p>
+      </a>
+    </li><li>
+      <a href="/articles/">
+        <!--  -->
+        <div class="title">随笔</div>
+        <p class="excerpt">随笔</p>
+      </a>
+    </li><li>
+      <a href="/about/">
+        <!-- <img src="/images/400x250.gif" alt="teaser" class="teaser"> -->
+        <div class="title">关于我</div>
+        <p class="excerpt">关于我</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/study/" itemprop="url">
+        <span itemprop="title">Study</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>UNIX环境高级编程学习笔记三</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h3 id="section">前言</h3>
+<p>        这一次学习文件I/O，属于不带缓冲的I/O，每个read/write都调用内核中的一个系统调用。</p>
+
+<h3 id="section-1">文件描述符</h3>
+<p>        正如第一章所说，文件描述符作为进程打开的文件的一个标志<br />
+<code>STDIN_FILENO</code>,<code>STDOUT_FILENO</code>和<code>STDERR_FILENO</code>是标准输入，标准输出和标准错误的文件描述符，对应幻数0、1、2</p>
+
+<h3 id="section-2">打开文件</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> int open (const char *__file, int __oflag, ...)
+<span class="lineno">2</span> int openat (int __fd, const char *__file, int __oflag, ...)</code></pre></div>
+
+<p>        两者打开的文件描述符一定是最小描述符<br />
+open函数是最基本的打开文件函数，__oflag指定打开文件的选项，有只读，只写，追加等等，O_SYNC可以阻塞到物理I/O完成再返回。
+openat是新增函数，一是让线程可以使用相对路径名打开目录中的文件，而不再只能打开当前工作目录，二是避免TOCTTOUT错误</p>
+
+<h3 id="section-3">关闭文件</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> int close(int fd)</code></pre></div>
+
+<p>        关闭文件描述符对应的文件，进程终止时，内核自动关闭它打开的所有文件</p>
+
+<h3 id="section-4">文件偏移量</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> off_t lseek(int fd, off_t offset,int whence)</code></pre></div>
+
+<p>        lseek()。当文件描述符指向管道、FIFO或者网络套接字时返回-1。有些文件系统支持负数偏移量，所以要测试返回值是否等于-1而不仅仅是负数。<br />
+        当追求的偏移量大于文件末尾，在新内容与之前内容末尾有一段“空洞”，空洞不会算进长度但会占用磁盘块，内容全以0填充</p>
+
+<h3 id="section-5">读文件</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> ssize_t read(int fd, void *buf,size_t nbytes);</code></pre></div>
+
+<h3 id="section-6">写数据</h3>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno">1</span> ssize_t write(int fd, const void *buf,size_t nbytes);</code></pre></div>
+
+<h3 id="io">I/O效率</h3>
+<p>在磁盘块长度为4096字节情况下，缓冲区设置为4096以上性能最好</p>
+
+<h3 id="section-7">文件共享</h3>
+<p>        要理解文件共享，参照下面一幅图</p>
+<figure>
+	<a href="../../images/8-22-1.png"><img src="../../images/8-22-1.png" width="600px" /></a>
+</figure>
+
+<ul>
+  <li>每一个进程会维护一个进程表项（列表），每一项包含一个<code>文件描述符标志</code>和一个<code>指向一个文件表项的指针</code>。</li>
+  <li>内核为所有打开文件维持一张文件表。包含<code>文件状态标志（读、写、添写等）</code>，<code>文件偏移量</code>和<code>指向文件节点表项的指针（指向真正文件节点的指针）</code></li>
+</ul>
+
+<figure>
+	<a href="../../images/8-22-2.png"><img src="../../images/8-22-2.png" width="600px" /></a>
+</figure>
+
+<p>        这样每个进程对同一个文件的偏移量和操作都是不一样的。当对同一个文件写的时候就会出现问题。A、B进程对同一个文件的偏移量不同，在写的时候会出现覆盖掉前面进程写的数据的情况，即使每一次都先调用lseek将偏移量定位到末尾也会。比如,A、B都调用lseek然后write。那可能在A write之前B调用了lseek，那么B就会覆盖了A的write数据，这是因为这些都不是原子操作。</p>
+
+<h3 id="section-8">原子操作</h3>
+<p>        打开文件的时候将文件状态标志设置成O_APPEND，这样每次调用write的时候内核会先将偏移量定位到末尾然后再write,将两步合成一步。这也是和lseek后再write的不同。</p>
+
+<h3 id="dupdup2">dup和dup2</h3>
+<p>        dup和dup2是复制一个文件描述符，共享一个文件表项，如下图</p>
+
+<figure>
+	<a href="../../images/8-22-3.png"><img src="../../images/8-22-3.png" width="500px" /></a>
+</figure>
+
+<h3 id="syncfsyncfdatasync">sync、fsync、fdatasync</h3>
+<p>        我们向文件写数据时，内核会先将数据复制到缓冲区，然后排入队列。然后再写入磁盘，即<code>延迟写</code>。<br />
+        而利用这三个函数可以修改这个过程。
+-	sync将所有修改过的块缓冲区排入写队列，通常update系统守护进程会定期执行
+-	fsync对一个fd起作用，会等到磁盘操作结束才返回，会更新文件属性
+-	fdatasync和fsync类似，但只影响数据部分</p>
+
+<h3 id="fcntl">fcntl</h3>
+<p>        fcnl函数可以改变已经打开文件的属性</p>
+
+<h3 id="ioctldevfd">ioctl和/dev/fd</h3>
+<p>        这两部分没怎么懂</p>
+
+<h3 id="section-9">最后</h3>
+<p>        这一章重点是要理解文件描述符的结构，理解原子操作。</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="Carson Lin">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="lxyyxl638@github.io" itemprop="author">Carson Lin</a></h3>
+	<p class="author-bio">用心生活</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=UNIX环境高级编程学习笔记三&amp;url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+					<div class="page-meta">
+	<p>Updated <time datetime="2015-08-24T00:00:41Z" itemprop="dateModified">August 24, 2015</time>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	// var disqus_shortname = '';
+	var disqus_shortname = 'supery';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+        
+      
+			<li><a href="/" >首页</a></li>
+		
+      
+        
+      
+			<li><a href="/study/" >学习</a></li>
+		
+      
+        
+      
+			<li><a href="/life/" >生活</a></li>
+		
+      
+        
+      
+			<li><a href="/articles/" >随笔</a></li>
+		
+      
+        
+      
+			<li><a href="/about/" >关于我</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2015 <a href="">Carson的博客</a> powered by <a href="http://jekyllrb.com">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

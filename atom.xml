@@ -7,7 +7,7 @@
   <subtitle>My Life</subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="/" rel="alternate" type="text/html"/>
-  <updated>2015-08-22T15:05:59+08:00</updated>
+  <updated>2015-08-22T18:50:27+08:00</updated>
   <id>/</id>
   <author>
     <name>Carson Lin</name>
@@ -15,6 +15,104 @@
     <email>carsonxiaoyang@gmail.com</email>
   </author>
 
+  
+  <entry>
+    <title>UNIX环境高级编程学习笔记三</title>
+    <link href="/study/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B8%89/"/>
+    <updated>2015-08-22T00:00:00+08:00</updated>
+    <id>/study/unix环境高级编程学习三</id>
+    <author>
+      <name>Carson Lin</name>
+      <uri>/</uri>
+      <email>carsonxiaoyang@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;h3 id=&quot;section&quot;&gt;前言&lt;/h3&gt;
+&lt;p&gt;        这一次学习文件I/O，属于不带缓冲的I/O，每个read/write都调用内核中的一个系统调用。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;文件描述符&lt;/h3&gt;
+&lt;p&gt;        正如第一章所说，文件描述符作为进程打开的文件的一个标志&lt;br /&gt;
+&lt;code&gt;STDIN_FILENO&lt;/code&gt;,&lt;code&gt;STDOUT_FILENO&lt;/code&gt;和&lt;code&gt;STDERR_FILENO&lt;/code&gt;是标准输入，标准输出和标准错误的文件描述符，对应幻数0、1、2&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;打开文件&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; int open (const char *__file, int __oflag, ...)
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; int openat (int __fd, const char *__file, int __oflag, ...)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;        两者打开的文件描述符一定是最小描述符&lt;br /&gt;
+open函数是最基本的打开文件函数，__oflag指定打开文件的选项，有只读，只写，追加等等，O_SYNC可以阻塞到物理I/O完成再返回。
+openat是新增函数，一是让线程可以使用相对路径名打开目录中的文件，而不再只能打开当前工作目录，二是避免TOCTTOUT错误&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;关闭文件&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; int close(int fd)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;        关闭文件描述符对应的文件，进程终止时，内核自动关闭它打开的所有文件&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;文件偏移量&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; off_t lseek(int fd, off_t offset,int whence)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;        lseek()。当文件描述符指向管道、FIFO或者网络套接字时返回-1。有些文件系统支持负数偏移量，所以要测试返回值是否等于-1而不仅仅是负数。&lt;br /&gt;
+        当追求的偏移量大于文件末尾，在新内容与之前内容末尾有一段“空洞”，空洞不会算进长度但会占用磁盘块，内容全以0填充&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;读文件&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; ssize_t read(int fd, void *buf,size_t nbytes);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;写数据&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; ssize_t write(int fd, const void *buf,size_t nbytes);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;io&quot;&gt;I/O效率&lt;/h3&gt;
+&lt;p&gt;在磁盘块长度为4096字节情况下，缓冲区设置为4096以上性能最好&lt;/p&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;文件共享&lt;/h3&gt;
+&lt;p&gt;        要理解文件共享，参照下面一幅图&lt;/p&gt;
+&lt;figure&gt;
+	&lt;a href=&quot;../../images/8-22-1.png&quot;&gt;&lt;img src=&quot;../../images/8-22-1.png&quot; width=&quot;600px&quot; /&gt;&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;每一个进程会维护一个进程表项（列表），每一项包含一个&lt;code&gt;文件描述符标志&lt;/code&gt;和一个&lt;code&gt;指向一个文件表项的指针&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;内核为所有打开文件维持一张文件表。包含&lt;code&gt;文件状态标志（读、写、添写等）&lt;/code&gt;，&lt;code&gt;文件偏移量&lt;/code&gt;和&lt;code&gt;指向文件节点表项的指针（指向真正文件节点的指针）&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;../../images/8-22-2.png&quot;&gt;&lt;img src=&quot;../../images/8-22-2.png&quot; width=&quot;600px&quot; /&gt;&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;        这样每个进程对同一个文件的偏移量和操作都是不一样的。当对同一个文件写的时候就会出现问题。A、B进程对同一个文件的偏移量不同，在写的时候会出现覆盖掉前面进程写的数据的情况，即使每一次都先调用lseek将偏移量定位到末尾也会。比如,A、B都调用lseek然后write。那可能在A write之前B调用了lseek，那么B就会覆盖了A的write数据，这是因为这些都不是原子操作。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;原子操作&lt;/h3&gt;
+&lt;p&gt;        打开文件的时候将文件状态标志设置成O_APPEND，这样每次调用write的时候内核会先将偏移量定位到末尾然后再write,将两步合成一步。这也是和lseek后再write的不同。&lt;/p&gt;
+
+&lt;h3 id=&quot;dupdup2&quot;&gt;dup和dup2&lt;/h3&gt;
+&lt;p&gt;        dup和dup2是复制一个文件描述符，共享一个文件表项，如下图&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;../../images/8-22-3.png&quot;&gt;&lt;img src=&quot;../../images/8-22-3.png&quot; width=&quot;500px&quot; /&gt;&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;syncfsyncfdatasync&quot;&gt;sync、fsync、fdatasync&lt;/h3&gt;
+&lt;p&gt;        我们向文件写数据时，内核会先将数据复制到缓冲区，然后排入队列。然后再写入磁盘，即&lt;code&gt;延迟写&lt;/code&gt;。&lt;br /&gt;
+        而利用这三个函数可以修改这个过程。
+-	sync将所有修改过的块缓冲区排入写队列，通常update系统守护进程会定期执行
+-	fsync对一个fd起作用，会等到磁盘操作结束才返回，会更新文件属性
+-	fdatasync和fsync类似，但只影响数据部分&lt;/p&gt;
+
+&lt;h3 id=&quot;fcntl&quot;&gt;fcntl&lt;/h3&gt;
+&lt;p&gt;        fcnl函数可以改变已经打开文件的属性&lt;/p&gt;
+
+&lt;h3 id=&quot;ioctldevfd&quot;&gt;ioctl和/dev/fd&lt;/h3&gt;
+&lt;p&gt;        这两部分没怎么懂&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;最后&lt;/h3&gt;
+&lt;p&gt;        这一章重点是要理解文件描述符的结构，理解原子操作。&lt;/p&gt;
+
+    </content>
+  </entry>
   
   <entry>
     <title>UNIX环境高级编程学习笔记二</title>
@@ -152,7 +250,7 @@
   &lt;li&gt;不带缓冲的I/O&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;        read,write,open,close,lseek，属于系统调用，在&lt;unistd.h&gt;里&lt;/unistd.h&gt;&lt;/p&gt;
+&lt;p&gt;        read,write,open,close,lseek，在&lt;unistd.h&gt;里&lt;/unistd.h&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;带缓冲的I/O&lt;/li&gt;
